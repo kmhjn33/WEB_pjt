@@ -1,0 +1,259 @@
+
+#board_page_wrap {
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.f_left ,
+#board_top {
+    overflow: hidden;
+}
+
+.f_left > li ,
+.f_left > span ,
+.f_left > div ,
+#sort {
+    float: left;
+}
+
+#search ,
+.f_right {
+    float: right;
+}
+
+.no {width: 5%;}
+.cate {width: 8%;}
+.title {width: 52%;}
+.writer {width: 15%;}
+.date {width: 10%;}
+.hit {width: 5%;}
+.like {width: 5%;}
+
+.board_body {
+    text-align: center;
+    border-top: 1px solid #eff0f0;
+    padding: 15px 5px;
+}
+
+.board_body > .title {
+    text-align: left;
+    cursor: pointer;
+}
+.board_body > .title > span {
+    color: #ffd803;
+}
+.board_body > .title img {
+    width: 19px;
+    height: 19px;
+    vertical-align: middle;
+}
+
+.board_name {
+    margin: 50px 5px 20px 5px;
+    border-bottom: 3px solid #272343;
+}
+
+.board_name > li {
+    line-height: 52px;
+}
+
+.board_name > li > a {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #404455;
+    font-weight: 600;
+}
+#board_name_list .board_name li:hover a {
+    color: #ffd803;
+}
+#board_name_list .board_name li:hover .sel_board {
+    color: #272343;
+}
+.board_name > li > .sel_board {
+    color: #272343;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+#board_body_wrap {
+    padding: 0px 30px;
+    margin-top: 30px;
+}
+
+#board_top {
+    padding: 0px 12px;
+    margin-bottom: 5px;
+    height: 32px;
+}
+
+#sort > span {
+    padding-right: 13px;
+    font-size: 15px;
+    line-height: 30px;
+    color: #2d334a;
+}
+
+#sort > .p5 {
+    padding-right: 5px;
+}
+
+#board {
+    border-bottom: 2px solid #272343;
+    position: relative;
+}
+
+#board_head {
+    font-weight: 600;
+    text-align: center;
+    border-top: 2px solid #272343;
+    height: auto;
+    padding: 0px 5px;
+}
+
+#board_head > div {
+    height: 50px;
+    line-height: 50px;
+}
+
+#board_bottom {
+    text-align: center;
+    margin-top: 25px;
+}
+
+#pagination {
+    display: inline-block;
+    width: auto;
+    height: 35px;
+}
+
+#pagination li {
+    display: inline-block;
+    line-height: 35px;
+}
+
+#pagination li a {
+    padding: 9px 10px;
+    color: #2d334a;
+}
+#pagination li a:hover {
+    font-weight: bold;
+    background-color: #eff0f0;
+    border-radius: 3px;   
+}
+
+#pagination #first_page ,
+#pagination #prev_page ,
+#pagination #next_page ,
+#pagination #last_page {
+    background-color: #272343;
+    color: #fffffe;
+    border-radius: 3px;
+}
+
+#board_write > button {
+    padding: 10px 20px;
+    background-color: #ffd803;
+    border-radius: 3px;
+}
+
+.c_pointer {
+    cursor: pointer;
+}
+
+.sel_sort {
+    color: #2d334a;
+    font-weight: bold;
+}
+
+#pagination .sel_page {
+    background-color: #eff0f0;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+#sort > #list_count {
+    color: #ffd803;
+}
+
+#cate_open {
+    background-color: #fffffe;
+    border: 2px solid #272343;
+    border-radius: 3px;
+    width: 90.39px;
+    height: auto;
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: normal;
+    position: absolute;
+    left: 62px;
+    top: 50px;
+    display: none;
+}
+
+#cate_open ul li {
+    height: 25px;
+    line-height: 25px;
+    color: #2d334a;
+}
+
+#cate_open ul li:hover {
+    font-weight: bold;
+    color: #272343;
+}
+
+#board_head > .cate:hover > #cate_open {
+    display: inline-block;
+}
+
+#board_head > .cate:hover {
+    background-color: #272343;
+    color: #eff0f0;
+}
+
+#search > #search_form {
+    height: 25px;
+    line-height: 25px;
+}
+
+#search #search_form button {
+    padding: 6px 6px;
+    background-color: #ffd803;
+    border-radius: 3px;
+}
+
+#search #search_form input {
+    padding-left: 10px;
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #2d334a;
+    font-weight: bold;
+    height: 30px;
+    border-bottom: 1px solid #2d334a;
+} 
+
+#search #search_form input:focus {
+    border-bottom: 2px solid #2d334a;
+} 
+
+#search #search_form select {
+    padding: 0px 20px 0px 7px;
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    color: #2d334a;
+    font-weight: bold;
+    height: 30px;
+    border-bottom: 1px solid #2d334a;
+} 
+
+#search {
+    position: relative;
+}
+
+.cate_open_icon {
+    color: #2d334a;
+    position: absolute;
+    top: 7px;
+    left: 75px;
+}

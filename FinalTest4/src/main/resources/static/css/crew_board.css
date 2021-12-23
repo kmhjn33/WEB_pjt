@@ -1,0 +1,35 @@
+#comm_write_wrap {
+    border : none;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eff0f0;
+}
+
+.comment_content {
+    padding-bottom: 5px;
+}
+
+#mypage_head {
+    border-bottom: 3px solid #272343;
+}
+
+#mypage_title h2 {
+    margin: 15px;
+    font-size: xx-large;
+}
+
+#view_bottom .detail_table {
+    margin-bottom: 20px;
+}
+
+#board_body_wrap {
+    margin-top: 10px;
+}
+
+.detail_table {
+    font-size: 18px;
+}
+
+.detail_table th {
+    text-align: left;
+    width: 80px;
+}

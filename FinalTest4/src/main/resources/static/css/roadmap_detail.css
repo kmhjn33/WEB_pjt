@@ -1,0 +1,263 @@
+/* 사이드 바 */
+#roadmap_nickname {
+    margin: 15px 15px 35px 30px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#roadmap_side > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /* width: 200px; */
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+.active {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+/* li a.active {
+    background-color: #bae8e8;
+} */
+
+.active:hover {
+    background-color: #e3f6f5;
+}
+
+/* 로드맵 생성 버튼 */
+#roadmap_side #roadmap_add p{
+    margin-top: 15px;
+    background-color: #272343;
+    height: 40px;
+    line-height: 40px;
+    color: #fffffe;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.addmodal_content .roadmap_title {
+    text-align: center;
+}
+
+.addmodal_content .roadmap_content {
+    line-height: 0;
+}
+
+/* 로드맵 메인 */
+#main_top { overflow: hidden; }
+
+#main_top h2{
+    display: inline-block;
+    float: left;
+}
+
+#main_top .top_btn {
+    float: right;
+}
+
+#main_top .top_btn p {
+    display: inline-block;
+    background-color: #eee;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 18px;
+    cursor: pointer;
+}
+
+.roadmap_modi {
+    margin-right: 10px;
+}
+
+.roadmap_del {
+    margin-right: 40px;
+}
+
+#content_container {
+    overflow: hidden;
+}
+
+#roadmap_side {
+    display: inline-block;
+    float: left;
+}
+
+#roadmap_main {
+    margin-left: 300px;
+}
+
+#roadmap_main .use {
+    margin-left: 25px;
+    margin-bottom: 30px;
+}
+
+#roadmap_container {
+    border-top: 2px solid;
+    padding-top: 30px;
+    overflow: hidden;
+}
+
+.roadmap_box {
+    float: left;
+    margin: 10px;
+    width: 200px;
+    height: 850px;
+    position: relative;
+}
+
+.roadmap_top {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.roadmap_top .left {
+    float: left;
+    width: 65px;
+    text-align: center;
+    /* background-color: #eee; */
+}
+
+.roadmap_top .state {
+    background-color: #bae8e8;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.roadmap_top .count {
+    margin-left: 5px;
+    width: 30px;
+}
+
+.roadmap_top .right {
+    float: right;
+    background-color: #e3f6f5;
+    border-radius: 10px;
+    text-align: center;
+    width: 22px;
+}
+
+.drop_zone {
+    display: block;
+    padding-bottom: 30px;
+    background-color: #e3f6f5;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.roadmap_content {
+    border: 2px solid #272343;
+    padding: 5px;
+    margin-top: 1px;
+    margin-bottom: 15px;
+    border-radius:10px;
+    background-color: #fffffe;
+    cursor: pointer;
+}
+
+.roadmap_content .pad {
+    padding: 5px;
+}
+
+.roadmap_content .title {
+    height: 30px;
+    line-height: 30px;
+}
+
+.two { overflow: hidden; }
+.two .subject { float: left; }
+.two .textbook { float: left;  margin-left: 20px; }
+
+/* 로드맵 세부 생성 */
+#detail_add {
+    background-color: #ffd803;
+    border-radius: 10px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* modal */
+.modal_content .roadmap_title {
+    text-align: center;
+}
+
+.modal_content .roadmap_write {
+    line-height: 0;
+}
+
+.modal_btn {
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#save_btn {
+    float: left;
+    width: 240px;
+    margin-right: 15px;
+    cursor: pointer;
+    background-color:#ffd803;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 10px;
+}
+
+#cancel_btn {
+    float: left;
+    width: 240px;
+    cursor: pointer;
+    /* background-color:#DDDDDD; */
+    border: 2px solid #272343;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+.modal_btn .pop_bt {
+    font-size: 13pt;
+}
+
+#modal_tb td{
+    padding: 6px;
+}
+
+#modal_tb select{
+    padding: 3px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+#modal_tb select option{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+#modal_tb input {
+    padding: 3px;
+}
+
+/* subModal */
+#subject_add {
+    padding: 4px;
+    background-color: #bae8e8;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 7px;
+    cursor: pointer;
+}

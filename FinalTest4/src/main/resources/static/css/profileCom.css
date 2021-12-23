@@ -1,0 +1,244 @@
+@font-face {
+	font-family: 'Pretendard-Regular';
+	src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+	font-weight: 400;
+    font-style: normal;
+}
+
+*{font-family: 'Pretendard-Regular';}
+
+*{box-sizing: border-box;}
+
+body{
+	margin:0;
+	background-color: #ffffff;
+}
+  
+  .filebox input[type="file"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip:rect(0,0,0,0);
+	border: 0;
+  }
+
+  .filebox {
+	  margin: 0px auto;
+	  padding-left: 40px;
+
+  }
+  
+  .filebox label {
+	display: inline-block;
+	padding: .5em .75em;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fffffe;
+	cursor: pointer;
+	border: 1px solid #d9d4e7;
+	border-bottom-color: #fffffe;
+	border-radius: .25em;
+  }
+  
+  /* named upload */
+  .filebox .upload-name {
+	color: #2d334a;
+	display: inline-block;
+	padding: .5em .75em;
+	font-size: inherit;
+	font-family: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fffffe;
+	border: 1px solid #d9d4e7;
+	border-radius: .25em;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+  }
+  
+  /* imaged preview */
+  .filebox .upload-display {
+	margin-bottom: 5px;
+  }
+  
+  @media(min-width: 768px) {
+	.filebox .upload-display {
+	  display: inline-block;
+	  margin-right: 5px;
+	  margin-bottom: 0;
+	}
+  }
+
+  
+  
+  .filebox .upload-thumb-wrap {
+	display: inline-block;
+	width: 54px;
+	padding: 2px;
+	vertical-align: middle;
+	border: 1px solid #d9d4e7;
+	border-radius: 5px;
+	background-color: #fffffe;
+  }
+  
+  .filebox .upload-display img {
+	display: block;
+	max-width: 100%;
+	width: 100% \9;
+	height: auto;
+  }
+  
+  .filebox.bs3-primary label {
+	color: #272343;
+	background-color: #fffffe;
+	border:1px solid #d9d4e7;
+  }
+
+a{color:inherit;text-decoration:none}
+h1{
+	text-align: center;
+	font-weight: bold;
+	color: #272343;
+	font-size: 40px;
+	padding-bottom: 30px;
+}
+
+.login-wrap{
+	width:100%;
+	margin:auto;
+	max-width:525px;
+	padding-top: 100px;
+	min-height:670px;
+	position:relative;
+}
+
+.login-html{
+	width:100%;
+	height:100%;
+	position:absolute;
+	padding:100px 90px 100px 90px;
+	background:#fffffe;
+	background-repeat : no-repeat;
+    background-size : cover;
+	height: 800px;
+	box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.16);
+	
+}
+
+.login-form{
+	min-height:345px;
+	position:relative;
+	perspective:1000px;
+	transform-style:preserve-3d;
+	
+}
+.login-form .group{
+	padding: 10px 0px;	
+}
+
+.login-form .group .label,
+.login-form .group .input,
+.login-form .group .button{
+	width:100%;
+	display:block;
+}
+
+.login-form .group .input,
+.login-form .group .button{
+	border: 1px solid #fffffe;
+	padding:15px 20px;
+	border-radius:8px;
+	box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+	background-color: rgba(224, 224, 224, 0.72);	
+}
+
+.group .label{
+	color: #272343;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.login-form .group .label{
+	font-size:12px;
+}
+
+.checkboxtype{
+	background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.sign-up-htm .group .label{
+	font-size: 15px;
+	padding-bottom: 10px;
+	color: #272343;
+	font-weight: bold;
+	padding-left: 3px;
+}
+
+.group .emails .left{
+	padding-top: 80px;
+	
+}
+.group .emails .left .left_under{
+	padding-top: 10px;
+}
+
+.group .emails .right{
+	padding-top: 10px;
+}
+.group .emails .right .button{
+	display: block;
+    float: right;
+	width: 30%;
+}
+
+.sign-up-htm .group .Btns {
+	padding-top: 200px;
+}
+
+.sign-up-htm .group .Btns .rightBtn {
+    float: left;
+	width: 50%;
+	padding-left: 15px;
+}
+
+.Btns .rightBtn .button{
+	background-color: #ffd803;
+	border: 1px solid #ffd803;
+	color: #272343;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.sign-up-htm .group .Btns .leftBtn {
+    float: left;
+	width: 50%;
+	padding-right: 15px;
+
+}
+
+.sign-up-htm .group .Btns .leftBtn {
+    float: left;
+	width: 50%;
+	padding-right: 15px;
+}
+
+.sign-up-htm .group .Btns .leftBtn .button {
+   border: 2px solid #272343;
+   background-color: #fffffe;
+   font-size: 18px;
+   font-weight: 600;
+}
+
+
+
+
+

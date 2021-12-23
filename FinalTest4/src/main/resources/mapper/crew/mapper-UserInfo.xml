@@ -1,0 +1,12 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.UserInfoMapper">
+
+    <!-- 로그인 정보 -->
+	<select id="selectLogin" resultType="com.site.team1.vo.UserInfoVo">
+		select * from user_info where u_id=#{u_id} and u_pw=#{u_pw}
+	</select>
+	
+</mapper>

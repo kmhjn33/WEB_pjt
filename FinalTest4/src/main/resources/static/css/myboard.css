@@ -1,0 +1,65 @@
+/* 내 게시글 관리 */
+#board_tab {
+    width: 360px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#board_tab ul {
+    overflow: hidden;
+    display: inline-block;
+}
+
+#board_tab li {
+    display: inline-block;
+    margin: 8px;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+/* active */
+#board_tab li a:active {
+    color: #bae8e8;
+}
+
+li a.active {
+    color: #ffd803;
+}
+
+li a:hover:not(.active) {
+    color: #bae8e8;
+}
+
+#board_list {
+    margin-top: 15px;
+}
+
+#board_list table {
+    width: 1000px;
+    margin: 0 auto;
+    border-top: 3px solid #272343;
+    border-bottom: 3px solid #272343;
+    border-collapse: collapse;
+}
+
+#board_list table th {
+    padding: 10px;
+    border-bottom: 3px solid #272343;
+    border-collapse: collapse;
+    font-size: 17px;
+}
+
+#board_list table td {
+    padding: 10px;
+    border-top: 1px solid ;
+    border-bottom: 1px solid;
+    border-color: #eff0f0
+}
+
+#board_list table .date {
+    text-align: center;
+}
+
+#board_list table .hit {
+    text-align: center;
+}

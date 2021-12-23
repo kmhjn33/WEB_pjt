@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.site.team1.mapper.RoadmapListMapper">
+	
+	<!-- 넘버링 데이터 넣기 -->
+		<select id="selectListCount" resultType="int">
+		<if test="cate_sub_no == null">
+		   select count(*) from roadmap
+		</if>
+		<if test="cate_sub_no != null">
+				select count(*) from roadmap
+			<if test="cate_sub_no == 1">
+				where cate_sub_no=1
+			</if>
+			<if test="cate_sub_no == 3">
+				where cate_sub_no=3
+			</if>
+			<if test="cate_sub_no == 5">
+				where cate_sub_no=5
+			</if>
+			<if test="cate_sub_no == 21">
+				where cate_sub_no=21
+			</if>		
+		</if>
+	</select>
+	
+
+	<!-- 로드맵 생성하기 -->
+	<insert id="insertRoadmap">
+		insert into roadmap values (roadmap_seq.nextval, #{r_name}, #{u_no}, #{cate_sub_no}, 'Y')
+		<selectKey keyProperty="r_no" resultType="int" order="AFTER">
+			select roadmap_seq.currval from dual
+		</selectKey>	
+	</insert>
+	
+ 	<resultMap id="categorySubVoMap" type="com.site.team1.vo.CategorySubVo">
+		<result column="cate_sub_no" property="cate_sub_no" />
+		<result column="cate_sub_name" property="cate_sub_name" />
+	</resultMap>
+	
+	<resultMap id="roadmapVoMap" type="com.site.team1.vo.RoadmapVo">
+		<result column="r_no" property="r_no" />
+		<result column="r_name" property="r_name" />
+		<result column="u_no" property="u_no" />
+	</resultMap>
+	
+	<resultMap id="roadmapCateSubVoMap" type="com.site.team1.vo.RoadmapCateSubVo">
+		<collection property="categorySubVo" resultMap="categorySubVoMap"></collection>
+		<collection property="roadmapVo" resultMap="roadmapVoMap"></collection>
+	</resultMap>
+
+	<select id="selectRoadmapList" resultMap="roadmapCateSubVoMap">
+		select c.cate_sub_no, c.cate_sub_name, r.r_no, r.r_name, r.u_no from category_sub c, roadmap r 
+		<choose>
+			<when test="cate_sub_no == 0">where c.cate_sub_no=r.cate_sub_no  and r.cate_sub_no not in('2', '4', '6', '22') and r_expose not in('N') and u_no=#{u_no}</when>
+			<otherwise>where c.cate_sub_no=r.cate_sub_no and c.cate_sub_no=#{cate_sub_no} and r_expose not in('N') and u_no=#{u_no}</otherwise>
+		</choose>
+		order by r_no desc
+	</select>
+
+</mapper>

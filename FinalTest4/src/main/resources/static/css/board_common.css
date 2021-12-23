@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    word-break: keep-all;
+}
+
+body, html {
+    width: 100%; /* 기존 */
+    min-width: 320px; /* 최소 */
+    font-family: 'Pretendard-Regular';
+    color: #272343;
+    background-color: #fffffe;
+}
+
+ul, li, ol, dl, dd {list-style: none;}
+
+img {max-width: 100%; height: auto;} /* 부모의 상자 크기를 넘지 않도록 */
+
+input, textarea, select, button { /* 브라우저별 고유 디자인 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    color: #272343;
+    cursor: pointer;
+}
+
+input:focus ,
+textarea ,
+select{
+    outline:none;
+}
+
+input::placeholder ,
+textarea::placeholder {
+    color: #ccc;
+}
+
+button {
+    font-family: 'Pretendard-Regular';
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: -1;
+    color: #272343;
+
+}

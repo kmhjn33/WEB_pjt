@@ -1,0 +1,165 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.BoardAdminMapper">
+	
+	
+	
+	<!-- Board(게시판 분류 코드 정보 가져오기 -->
+	<select id="selectBoard" resultType="com.site.team1.vo.BoardAdminVo">
+		select * from board
+	</select>
+	
+	<!-- 보드 상세 분류 정보  -->
+	<select id="selectBoardCate" resultType="com.site.team1.vo.BoardCateAdminVo">
+	
+		select * from board_cate 
+		<if test="!b_no.equals(0)">
+			<where>
+				and b_no=#{b_no}
+			</where>
+		</if>
+	</select>
+
+	<!-- 게시글 row count 정보 -->
+	<select id="selectBoardPostCount" resultType="int">
+		<if test="searchWord.equals('')">
+          
+             	select count(*) from board_post b
+             	<where>
+              	<if test="b_no!=0">
+	               	<if test="b_cate_no!=0">
+	               		and b.b_cate_no=#{b_cate_no}
+	               	</if>
+	               	<if test="b_cate_no==0">
+	               		and b.b_cate_no in (select b_cate_no from board_cate where b_no=#{b_no})
+	               	</if>
+              	</if>
+             </where>
+		</if>	
+		
+		<if test="!searchWord.equals('')">
+            
+                
+              select count(*) from board_post b
+	              <where>
+		               <if test="b_no!=0">
+			                <if test="b_cate_no!=0">
+			                	and b.b_cate_no=#{b_cate_no}
+			                </if>
+					        <if test="b_cate_no==0">
+			               		and b.b_cate_no in (select b_cate_no from board_cate where b_no=#{b_no})
+			               	</if>
+		               </if>
+	               
+		               <if test="category.equals('all')"></if>
+		               		and ( b_post_title like '%' || #{searchWord} || '%' or b_post_content like '%' || #{searchWord} || '%' )
+		               <if test="!category.equals('all')">
+	               			and ${category} like '%' || #{searchWord} || '%' 
+	               		</if>
+	              </where>
+		</if>
+	
+	
+	</select>
+		
+	<!-- 게시글 정보  -->
+	<select id="selectBoardPost" resultType="com.site.team1.vo.BoardPostAdminVo">
+		<if test="searchWord.equals('')">
+            select rr.* from
+                (select rownum rnum, bb.* from
+                    (select b.*,c.b_cate_name,(select b_name from board d where d.b_no=c.b_no) b_name  from board_post b,board_cate c
+                    <where>
+                    	b.b_cate_no=c.b_cate_no 
+	                    <if test="b_no!=0">
+		                    <if test="b_cate_no!=0">
+		                    	and b.b_cate_no=#{b_cate_no}
+		                    </if>
+					        <if test="b_cate_no==0">
+			               		and b.b_cate_no in (select b_cate_no from board_cate where b_no=#{b_no})
+			               	</if>		                    
+	                    </if>
+                    </where>
+                    ) bb
+                ) rr 
+            where ceil(rnum/#{limit})=#{page}
+            order by rr.rnum
+		</if>	
+		
+		<if test="!searchWord.equals('')">
+            select rr.* from
+                (select rownum rnum, bb.* from
+                    (select b.*,c.b_cate_name,(select b_name from board d where d.b_no=c.b_no) b_name  from board_post b,board_cate c
+                    <where>
+	                    <if test="b_no!=0">
+		                    <if test="b_cate_no!=0">
+		                    	and b.b_cate_no=#{b_cate_no}
+		                    </if>
+					        <if test="b_cate_no==0">
+			               		and b.b_cate_no in (select b_cate_no from board_cate where b_no=#{b_no})
+			               	</if>		                    
+	                    </if>
+	                    
+	                    <if test="category.equals('all')">
+	                    	and ( b_post_title like '%' || #{searchWord} || '%' or b_post_content like '%' || #{searchWord} || '%' )
+	                    </if>
+	                    <if test="!category.equals('all')">
+	                    	and ${category} like '%' || #{searchWord} || '%' 
+	                    </if>
+                    </where>
+                    ) bb
+                ) rr 
+            where ceil(rnum/#{limit})=#{page}
+            order by rnum
+		</if>
+		
+	</select>
+	
+	<!-- 게시글 1개 가져오기 푸하하하하하하하하하  -->
+	<select id="selectBoardPostbyNo" resultType="com.site.team1.vo.BoardPostAdminVo">
+		select * from board_post where b_post_no=#{b_post_no}		
+	</select>
+	
+	
+	<!-- 게시글 신고 정보  -->
+	<select id="selectBoardReports" resultType="com.site.team1.vo.BoardReportAdminVo">
+		select r.*,u.u_name from board_report r,user_info u where r.u_no=u.u_no and r.b_post_no=#{b_post_no}
+	</select>
+	
+	<!-- 게시글 신고 정보  -->
+	<select id="selectBoardComments" resultType="com.site.team1.vo.BoardCommentAdminVo">
+		select c.*,u.u_name from board_comment c,user_info u where c.u_no=u.u_no and c.b_post_no=#{b_post_no}
+	</select>
+	
+	<!-- 게시글 첨부파일 정보  -->
+		<!-- 게시글 신고 정보  -->
+	<select id="selectBoardFiles" resultType="com.site.team1.vo.BoardFileAdminVo">
+		select * from board_file where b_post_no=#{b_post_no}
+	</select>
+	
+	<!-- 추천인 정보  -->
+	<select id="selectBoardRecommand" resultType="com.site.team1.vo.BoardRecommandVo">
+	
+		select b.b_comm_like_no,b.b_comm_no,b.b_comm_like_date,u.u_name from board_comment_like b,user_info u  
+		where b.u_no=u.u_no and  b.b_comm_no=#{b_comm_no}
+		
+	</select>
+	
+	<!-- 댓글 삭제  -->
+	<delete id="deleteBoardComments">
+		delete board_comment where b_comm_no=#{b_comm_no}
+	</delete>
+	
+	<!-- 신고 내역 삭제 -->
+	<delete id="deleteBoardReports">
+		delete board_report where b_report_no=#{b_report_no}
+	</delete>
+	
+	<!-- 추천 정보 삭제 -->
+	<delete id="deleteBoardRecommand">
+		delete board_comment_like where b_comm_like_no=#{b_comm_like_no}
+	</delete>
+	
+
+</mapper>

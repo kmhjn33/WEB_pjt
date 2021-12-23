@@ -1,0 +1,75 @@
+#container {
+    position: relative;
+    display: block;
+    margin: 0px auto;
+    height: 800px;
+}
+
+#quit_info {
+    position: absolute;
+    left: 250px;
+    top: 150px;
+}
+
+#quit_info #title {
+    font-size: 25px;
+}
+
+#member_quit {
+    position: absolute;
+    top: 495px;
+    left: 400px;
+    padding: 7px;
+    margin-left: 15px;
+    height: 60px;
+    width: 100px;
+    font-size: large;
+    border-radius: 10px;
+    background-color: #ffd803;
+    border: 2px solid #ffd803;
+    color: #272343;
+    margin-top: 50px;
+}
+#mypage_head{
+    border-bottom: 2px solid #ffd803;
+}
+
+#mypage_title h2{
+    color: #272343;
+}
+#mypage_title small{
+    color: #272343;
+}
+
+#cancel_btn {
+    position: absolute;
+    top: 495px;
+    left: 630px;
+    padding: 7px;
+    height: 60px;
+    width: 100px;
+    font-size: large;
+    border-radius: 10px;
+    background-color: #272343;
+    border: 1px solid #272343;
+    color: #fffffe;
+    margin-top: 50px;
+}
+
+#quit_info {
+    border: 1px solid #d9d4e7;
+    border-radius: 10px;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.16);
+    padding: 20px;
+    
+}
+
+.Btn #cancel{
+    padding-left: 500px;
+}
+.red {
+    color: red;
+    
+   
+}
+

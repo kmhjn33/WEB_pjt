@@ -1,0 +1,9 @@
+#add_roadmap {
+	cursor: pointer;
+}
+
+.roadmap_name {
+	margin-left: 30px;
+	text-align: left;
+	width: 300px;
+}

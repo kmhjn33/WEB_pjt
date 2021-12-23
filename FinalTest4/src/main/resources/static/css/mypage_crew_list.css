@@ -1,0 +1,221 @@
+*{margin: 0; padding: 0; list-style: none;}
+* { word-break: keep-all; }
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+ }
+ *{font-family: 'Pretendard-Regular';}
+
+/* header--------------------------------------------------------------- */
+.top{width: 1200px; margin: 0 auto;
+    height: 80px;
+    background-color: #fffffe;
+    border-bottom: 4px solid #272343;
+}
+.top .category{float: left;
+    line-height: 80px;
+    padding-left: 40px;
+    font-size: 20px;
+    color: #272343;
+}
+.top .icon{float: right;}
+.icon ul{padding-right: 40px; display: inline;}
+.icon ul li{display: inline-block;}
+.icon ul li .icon1{ margin-right: 60px;}
+.icon ul li .icon1 .material-icons{
+    display: inline-block;
+    color: #272343;
+    padding: 20px;
+    
+}
+.icon ul li .icon2 .material-icons{
+    display: inline-block;
+    padding: 20px;
+    color: #272343;
+}
+/* icon2 hover */
+.icon2 {
+    position: relative;
+    display: inline-block;
+  }
+  
+.icon2 .tooltip {
+visibility: hidden;
+width: 120px;
+background-color: #eeecec;
+text-align: center;
+border-radius: 6px;
+padding: 5px 0;
+
+/* Position the icon2 */
+position: absolute;
+z-index: 1;
+top: 90%;
+left: 70%;
+margin-left: -60px;
+}
+.icon2 .tooltip li{
+margin: 15px;
+}
+
+.icon2 .tooltip a{
+    color: #f56a6a;
+    
+}
+
+.icon2:hover .tooltip {
+visibility: visible;
+}
+
+/* section--------------------------------------------- */
+.wrap{
+    width: 1200px;
+    margin: 0 auto;
+
+}
+
+/* up----------------------------- */
+.wrap > h2{margin-top: 100px;}
+.up{
+    overflow: hidden;
+    width: 100%;
+    background-color: #fffffe;
+    
+    border-top: 4px solid #272343;
+}
+
+.up .u-left{
+    width: 540px;
+    height: 200px;
+    background-color: #f9fcfc;
+    border: 2px solid #272343;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin: 40px 10px 40px 45px;
+    float: left;
+}
+.up .u-right{
+    width: 540px;
+    height: 200px;
+    background-color: #fffffe;
+    border: 2px solid #272343;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin: 40px 40px 40px 10px;
+    float: left;
+}
+
+.countbox{
+    width: 20%;
+    float: left;
+    margin-top: 40px;
+    margin-left: 21.5px;
+    background-color: #e3f6f5;
+    border-radius: 10px;
+}
+
+.u-right > .countbox{background-color: #373a6e;}
+.u-right > .countbox > .box1 > a {color: #ffd803;}
+.u-right > .countbox > .box2 > p {color: #ffd803;}
+
+#imsi {
+	background-color: orange;
+}
+#imsi > .box1 > a{color: #373a6e;}
+#imsi > .box2 > p{color: #373a6e;}
+
+.countbox .box1{
+    width: 100%;
+    height: 80px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 50px;
+    
+}
+.countbox > .box1 > a{text-decoration: none; color: #272343;}
+.countbox > .box1 > a:hover{font-size: 150%;}
+
+.countbox .box2{
+    width: 100%;
+    text-align: center;
+    
+}
+.box2 p{
+    display: inline-block;
+    padding: 5px 15px 10px 15px;
+    font-weight: bold;
+    color: #272343;
+}
+
+
+hr{
+    width: 100px;
+    margin-left: 40px;
+    border-color: #272343;
+}
+
+.linebox{
+
+    width: 80%;
+    padding: 10px 6px;
+    margin-left: 40px;
+    color: #272343;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* down------------------------------------------ */
+.down{
+    width: 100%;
+    background-color: #fffffe;
+    overflow: hidden;
+    padding-left: 40px;
+}
+.down .listbox{
+    width: 320px;
+    border-radius: 10px;
+    background-color: #e3f6f5;
+    float: left;
+    margin: 20px 65px 30px 0px;
+    padding: 20px;
+    padding-bottom: 30px;
+}
+.box3, .box4, .box5, .box6, .box7{
+    margin-top: 10px;
+    color: #272343;
+}
+.box4{
+    font-size: 25px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis; /* width를 설정하지 않고 여기까진 위와 동일 */
+    height: 60px; /* 대신 height를 설정해준다. 텍스트 크기에 맞춰 height가 1줄인 경우*/
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 줄 개수를 설정한다. 만약 2줄이상이라면 height와 해당 값을 수정
+    출처: https://yeolco.tistory.com/151 [열코의 프로그래밍 일기] */
+    -webkit-box-orient: vertical;
+}
+
+.box7 .button{
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    float: right;
+    background-color: #ffd803;
+    color: #272343;
+    margin-left: 10px;
+}
+.box7 .button:hover{
+    background-color: #272343;
+    color: #fffffe;
+}
+
+
+
+.material-icons {
+    vertical-align: middle;
+}

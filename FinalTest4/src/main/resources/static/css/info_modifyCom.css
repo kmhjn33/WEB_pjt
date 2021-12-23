@@ -1,0 +1,144 @@
+#container {
+    position: relative;
+}
+
+#info_tb { 
+    margin: 0 auto; 
+    width: 500px;
+    height: 300px;
+}
+
+#info_tb input {
+    padding: 2px;
+}
+
+#info_tb select {
+    padding: 2px;
+}
+
+#modify_btn {
+    position: absolute;
+    left: 460px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+#cancel_btn {
+    position: absolute;
+    left: 540px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+#profile_image img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 700px;
+    top: 90px;
+}
+
+#img_modify {
+    position: absolute;
+    left: 700px;
+    top: 200px;
+}
+#mypage_head {
+    border-bottom: 2px solid #ffd803;
+}
+#mypage_title h2{
+    color: #272343;
+}
+
+#mypage_title small{
+    color: #2d334a;
+}
+
+.container {
+    margin-top: 60px;
+    height: 400px;
+    margin-bottom: 40px;
+   
+}
+#info_tb strong{
+    color: #2d334a;
+    font-size: large;
+}
+
+#info_tb .input {
+    padding-left: 50px;
+}
+#info_tb input {
+    background-color: #fffffe;
+    border: 1px solid #d9d4e7;
+    border-radius: 10px;
+   
+    height: 25px;
+}
+
+#info_tb select {
+    background-color: #fffffe;
+    border: 1px solid #d9d4e7;
+    border-radius: 10px;
+   
+    height: 33px;
+}
+
+#info_tb .input{
+    color: #2d334a;
+    font-size: large;
+}
+
+.Btn #modify_btn{
+    border-radius: 10px;
+    border: 1px solid #ffd803;
+    background-color: #ffd803;
+    color: #272343;
+    width: 130px;
+    height: 50px;
+    margin-right: 75px;
+    font-size: large;
+  
+    
+}
+
+.Btn #cancel_btn{
+    border-radius: 10px;
+    border: 1px solid #272343;
+    background-color: #272343;
+    color: #fffffe;
+    width: 130px;
+    height: 50px;   
+    margin-left: 70px;
+    font-size: large;
+   
+}
+.Btn{
+    display: block;
+    margin: 0px auto;
+    width: 300px;
+    height: 70px;
+    
+   
+}
+.Btn #myPageBtn{
+    width: 200px;
+    height: 50px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ffd803;
+    background-color: #ffd803;
+    color: #272343;
+    font-size: large;
+}
+.container h1{
+    text-align: center;
+    margin-right: 60px;
+    padding-bottom: 50px;
+    color: #272343;
+}
+
+
+
+
+

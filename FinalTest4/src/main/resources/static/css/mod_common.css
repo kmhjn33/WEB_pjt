@@ -1,0 +1,38 @@
+* {
+    word-break: keep-all;
+}
+
+.m_c_pointer {
+    cursor: pointer;
+}
+
+.sign-up-htm .group .m_emailCkBtn {
+    width: 150px;
+    padding: 10px 20px;
+    background-color: #272343;
+    border: 1px solid #272343;
+    color: #fffffe;
+    font-weight: normal;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.emailCheck .m_emailCkBtn2 {
+    width: 100px;
+    background-color: #272343;
+    border: 1px solid #272343;
+    color: #fffffe;
+    font-weight: normal;
+}
+
+.sign-up-htm .emailCheck {
+    display: none;
+}
+
+.emailCheck {
+    margin-top: 10px;
+}
+
+/* .sign-up-htm .group .Btns {
+    padding-top: 120px;
+} */

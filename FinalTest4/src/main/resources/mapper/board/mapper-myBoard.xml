@@ -1,0 +1,79 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.MyBoardMapper" >
+
+	
+	<!-- ============================= type 조건 ================================ -->
+	<sql id="selectType">
+		<choose>
+			<when test="type.equals('post')">
+				from   board_post
+       			where  u_no = #{uNo} and
+       				   b_post_expose = 'Y'
+			</when>
+			<when test="type.equals('comment')">
+				from   board_comment
+       			where  u_no = #{uNo} and
+       				   b_comm_expose = 'Y'
+			</when>
+			<when test="type.equals('like')">
+				from   board_post
+       			where  b_post_no in (select b_post_no from board_like where u_no = #{uNo}) and
+       				   b_post_expose = 'Y'
+			</when>
+		</choose>
+	</sql>
+	<!-- ============================ //type 조건 =============================== -->
+
+<!-- *********************************************************************************** -->
+	
+	<!-- 전체 게시글 가져오기 -->
+	<select id="selectMyBoardPost" resultType="com.site.team1.vo.BoardPostVo">
+	
+		select rpost.*
+		from (
+		        select post.*, rownum as rnum
+		        from (
+		                select * 
+		                <include refid="selectType" />
+		                order by b_post_date desc
+		            )post 
+		        )rpost
+		<![CDATA[
+		where rnum >= ${boardPage.startRow} and rnum <= ${boardPage.endRow}
+		]]>
+		
+	</select>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 전체 게시글 가져오기 -->
+	<select id="selectMyBoardComment" resultType="com.site.team1.vo.BoardCommentVo">
+	
+		select rpost.*
+		from (
+		        select post.*, rownum as rnum
+		        from (
+		                select * 
+		                <include refid="selectType" />
+		                order by b_comm_date desc
+		            )post 
+		        )rpost
+		<![CDATA[
+		where rnum >= ${boardPage.startRow} and rnum <= ${boardPage.endRow}
+		]]>
+		
+	</select>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 게시글 갯수 가져오기 -->
+	<select id="selectMyBoardCount" resultType="int">
+			select count(*) 
+			<include refid="selectType" />
+	</select>
+
+
+</mapper>

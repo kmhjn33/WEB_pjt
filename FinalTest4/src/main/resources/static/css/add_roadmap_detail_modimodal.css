@@ -1,0 +1,75 @@
+#roadmap_nickname { margin-left: 15px; }
+
+#roadmap_nickname p { text-align: center; }
+
+#side_active {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+#side_active:hover {
+    background-color: #e3f6f5;
+}
+
+li a.active {
+    border-radius: 7px;
+}
+
+#roadmap_list a.active {
+    background-color: #bae8e8;
+}
+
+.roadmap_content .title {
+	padding-bottom: 0px;
+}
+
+.two .textbook { margin-left: 0px; }
+
+.use { margin-top: 10px; }
+
+#top_cate_name {
+	float: left;
+	margin: 30px 10px 10px 10px;
+	background-color: #e3f6f5;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+	width: 60px;
+}
+
+/* modal */
+.modiModal_content .roadmap_title {
+    text-align: center;
+}
+
+.modiModal_content .roadmap_write {
+    line-height: 0;
+}
+
+#modimodal_tb td{
+    padding: 6px;
+}
+
+#modimodal_tb select{
+    padding: 3px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+#modimodal_tb select option{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+#modimodal_tb input {
+    padding: 3px;
+}
+
+
+#roadmap_side {
+	width: 180px;
+}

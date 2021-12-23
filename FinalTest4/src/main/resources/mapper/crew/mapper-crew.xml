@@ -1,0 +1,110 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.CrewMapper">
+
+    <!-- 해당 카테고리 리스트 가져오기 --><!-- 신청일이 끝난거 조건 달아야 함 and sysdate <![CDATA[<=]]> c_apply_edate -->
+	<select id="selectStudyList" resultType="com.site.team1.vo.CrewVo">
+		select * from crew where cate_sub_no=#{cate_sub_no} and c_expose = 'Y'
+		order by c_no desc
+	</select>
+
+	<!-- 카테고리 이름 가져오기 -->
+	<select id="selectCateSubName" resultType="com.site.team1.vo.CategorySubVo">
+		select * from category_sub where cate_sub_no=#{cate_sub_no}
+	</select>
+
+
+
+    <!-- 크루 상세보기 게시글 1개 가져오기 -->
+	<select id="selectCrewOne" resultType="com.site.team1.vo.CrewVo">
+		select * from crew where c_no=#{c_no}
+	</select>
+
+    <!-- 참여하고싶어요 갯수 가져오기 -->
+	<select id="selectEntryCount" resultType="com.site.team1.vo.CrewEntryVo">
+		select * from crew_entry where c_no=#{c_no}
+	</select>
+    <!-- 관심있어요 갯수 가져오기 -->
+	<select id="selectLikeCount" resultType="com.site.team1.vo.CrewLikeVo">
+		select * from crew_like where c_no=#{c_no}
+	</select>
+
+
+
+    <!-- 참여하고 싶어요 crew_entry에 데이터 저장 -->
+	<insert id="insertCrewEntry">
+		<selectKey resultType="int" keyProperty="c_entry_no" order="BEFORE">
+			select crew_entry_seq.nextval from dual
+		</selectKey>
+		insert into crew_entry values(
+		#{c_entry_no},#{c_no},#{u_no}
+		)
+	</insert>
+	
+	<!-- 관심있어요 crew_like 에 데이터 저장 -->
+	<insert id="insertCrewLike">
+		<selectKey resultType="int" keyProperty="c_like_no" order="BEFORE">
+			select crew_like_seq.nextval from dual
+		</selectKey>
+		insert into crew_like values(
+		#{c_like_no},sysdate,#{u_no},#{c_no}
+		)
+	</insert>
+	
+
+    <!-- 참여하고 싶어요 갯수 다시 가져오기 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from crew_entry where c_no=#{c_no}
+	</select>
+	<!-- 관심있어요 갯수 다시 가져오기 -->
+	<select id="selectCount2" resultType="int">
+		select count(*) from crew_like where c_no=#{c_no}
+	</select>
+
+    <!-- c_entry_No 객체 받아오기 -->
+	<select id="selectEntryNo" resultType="com.site.team1.vo.CrewEntryVo">
+		select * from crew_entry where u_no = #{u_no} and c_no = #{c_no}
+	</select>
+	<!-- c_like_no 객체 받아오기 -->
+	<select id="selectLikeNo" resultType="com.site.team1.vo.CrewLikeVo">
+		select * from crew_like where u_no = #{u_no} and c_no = #{c_no}
+	</select>
+	
+	<!-- 참여하고 싶어요 취소취소 -->
+	<delete id="deleteEntry">
+		delete crew_entry where c_entry_no = #{c_entry_no}
+	</delete>
+	<!-- 관심있어요 취소취소 -->
+	<delete id="deleteLike">
+		delete crew_like where c_like_no = #{c_like_no}
+	</delete>
+	
+	<!-- 참여 하고 싶어요 눌렀는지 안눌렀는지 확인하고 조건 주기 -->
+	<select id="checkEnrty" resultType="com.site.team1.vo.CrewEntryVo">
+		select *from crew_entry where c_no=#{c_no} and u_no=#{u_no}
+	</select>
+	<!-- 관심 있어요 눌렀는지 안눌렀는지 확인하고 조건 주기 -->
+	<select id="checkLike" resultType="com.site.team1.vo.CrewLikeVo">
+		select *from crew_like where c_no=#{c_no} and u_no=#{u_no}
+	</select>
+	
+	<!-- 프로필 가져오기 -->
+	<select id="selectProfile" resultType="com.site.team1.vo.UserInfoVo">
+		select u.* from user_info u, crew c where u.u_no = c.u_no and c.c_no = #{c_no}
+	</select>
+
+	<!-- 크루 생성 시 내 프로필 가져오기 -->
+	<select id="selectProfile2" resultType="com.site.team1.vo.UserInfoVo">
+		select * from user_info where u_no = #{u_no}
+	</select>
+	
+	<!-- 참여 희망 인원 리스트에 담아 모달에 뿌리기 -->
+	<select id="entryUser" resultType="com.site.team1.vo.UserInfoVo">
+		select u.* from user_info u, crew_entry e where u.u_no = e.u_no and e.c_no = #{c_no}
+	</select>
+	
+	
+	
+</mapper>

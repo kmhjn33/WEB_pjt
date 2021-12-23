@@ -1,0 +1,119 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.MemberAdminMapper">
+	<!-- 전체회원정보  -->
+	<select id="selectMemberList"  resultType="com.site.team1.vo.MemberAdminVo">
+		
+		<if test='searchWord.equals("")'>
+            select rr.* from
+                (select rownum rnum, r.* from
+                    (select u.*,d.u_detail_type
+                        ,(select count(*) from board_report r where u.u_no=r.u_no) reported
+                        ,(select count(*) from board_post p where u.u_no=p.u_no ) board
+                        ,(select count(*) from crew_entry c where u.u_no=c.u_no ) crew
+                        ,(select count(*) from roadmap ro where u.u_no=ro.u_no ) roadmap
+                    from user_info u ,user_detail d 
+                    where u.u_detail_no=d.u_detail_no 
+                    order by u_name) r
+                ) rr 
+            where ceil(rnum/#{limit})=#{page}	
+		</if>
+		
+		<if test="!searchWord.equals('')">
+			<choose>
+				<when test="category.equals('all')">
+		            select rr.* from
+		                (select rownum rnum, r.* from
+		                    (select u.*,d.u_detail_type
+		                        ,(select count(*) from board_report r where u.u_no=r.u_no) reported
+		                        ,(select count(*) from board_post p where u.u_no=p.u_no ) board
+		                        ,(select count(*) from crew_entry c where u.u_no=c.u_no ) crew
+		                        ,(select count(*) from roadmap ro where u.u_no=ro.u_no ) roadmap
+		                    from user_info u ,user_detail d 
+		                    where u.u_detail_no=d.u_detail_no
+		                    and u_id like '%' || #{searchWord} || '%' or	u_name like '%' || #{searchWord} || '%'
+		                    order by u_name) r
+		                ) rr 
+		            where ceil(rnum/#{limit})=#{page}
+					
+				</when>
+				<otherwise>
+		            select rr.* from
+		                (select rownum rnum, r.* from
+		                    (select u.*,d.u_detail_type
+		                        ,(select count(*) from board_report r where u.u_no=r.u_no) reported
+		                        ,(select count(*) from board_post p where u.u_no=p.u_no ) board
+		                        ,(select count(*) from crew_entry c where u.u_no=c.u_no ) crew
+		                        ,(select count(*) from roadmap ro where u.u_no=ro.u_no ) roadmap
+		                    from user_info u ,user_detail d 
+		                    where u.u_detail_no=d.u_detail_no
+		                    and ${category} like '%' || #{searchWord} || '%' 
+		                    order by u_name) r
+		                ) rr 
+		            where ceil(rnum/#{limit})=#{page}
+					
+				</otherwise>
+			</choose>
+		</if> 
+	</select>
+	
+	<!-- 회원정보 카운트 -->
+	<select id="selectMemberListCount" resultType="int">
+		<if test="searchWord.equals('')">
+			select count(*) from user_info
+		</if>
+		
+		<if test="!searchWord.equals('')">
+			<choose>
+				<when test="category.equals('all')">
+					select count(*)
+					from user_info
+					where u_id like '%' || #{searchWord} || '%' or	u_name like '%' || #{searchWord} || '%'
+				</when>
+				<otherwise>
+					select count(*)
+					from user_info
+					where ${category} like '%' || #{searchWord} || '%'
+				</otherwise>
+			</choose>
+		</if> 
+	</select>
+	
+	<!-- 단일회원 검색  -->
+	<select id="selectUserInfobyIdMap" resultType="com.site.team1.vo.MemberAdminVo">
+		select u.*,d.u_detail_type  
+                   ,(select count(*) from board_report r where u.u_no=r.u_no) reported
+		           ,(select count(*) from board_post p where u.u_no=p.u_no ) board
+		           ,(select count(*) from crew_entry c where u.u_no=c.u_no ) crew
+		           ,(select count(*) from roadmap ro where u.u_no=ro.u_no ) roadmap
+		from user_info u ,user_detail d where u.u_detail_no=d.u_detail_no and u_no=#{u_no}
+	</select>
+	
+	<update id="user_outMap" >
+		update user_info set u_detail_no=9 where u_no=#{u_no}
+	</update>
+	
+	<select id="selectChart01" resultType="com.site.team1.vo.ChartVo">
+		select b.b_name as item_name, count(b.b_name) as item_count
+		from board b,(select ( select c.b_no from board_cate c where c.b_cate_no=p.b_cate_no) b_no,p.* from board_post p) c 
+		where b.b_no=c.b_no
+		group by b.b_name
+		union all
+		select '회원' as item_name , count(*) as item_count from user_info where u_detail_no=1
+		union all
+		select '로드맵' as item_name , count(*) as item_count from roadmap_detail
+		union all
+		select '크루' as item_name , count(*) as item_count from crew
+	</select>
+	
+	<select id="selectChart02" resultType="com.site.team1.vo.ChartVo">
+		select to_char(c_apply_sdate,'yyyy-mm') item_name,count(*) as item_count from crew group by to_char(c_apply_sdate,'yyyy-mm') order by item_name
+	</select>
+	
+	<select id="selectChart03" resultType="com.site.team1.vo.ChartVo">
+		select to_char(r_detail_startdate,'yyyy-mm') as item_name ,count(*) as item_count from roadmap_detail group by to_char(r_detail_startdate,'yyyy-mm') order by item_name
+	</select>
+
+</mapper>

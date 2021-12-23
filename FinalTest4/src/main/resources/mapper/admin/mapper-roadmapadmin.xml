@@ -1,0 +1,226 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.RoadmapAdminMapper">
+	
+	
+	<!-- 로드맵 Sub 분류 정보  -->
+	<select id="selectCateSub" resultType="com.site.team1.vo.CategorySubAdminVo">
+		select * from category_sub
+	</select>
+	
+	<!-- 과목 정보 -->
+	<select id="selectSubject" resultType="com.site.team1.vo.SubjectAdminVo">
+		select * from subject
+	</select>
+	
+	<!-- 교제 정보  -->
+	<select id="selectTextbook" resultType="com.site.team1.vo.TextbookAdminVo">
+		select * from textbook
+	</select>
+
+	<!-- 로드맵 상세 조회 list count -->
+	<select id="selectRoadmapCount" resultType="int">
+		
+			select count(*)
+			from textbook t, roadmap_detail r
+			<where>
+				t.textbook_no=r.textbook_no
+				<!-- and (r_detail_startdate between #{r_detail_startdate} and #{r_detail_enddate} or r_detail_enddate between #{r_detail_startdate} and #{r_detail_enddate}) -->
+				<if test="r_detail_startdate!=null">
+					and ( #{r_detail_startdate} between  r_detail_startdate and r_detail_enddate or #{r_detail_enddate}  between r_detail_startdate and r_detail_enddate)
+				</if>
+				<if test="!searchWord.equals('')">
+					<choose>
+						<when test="category.equals('all')">
+							and r_no in (select r_no from roadmap where u_no in(select u_no from user_info where u_id like '%' || #{searchWord} || '%' or u_name like '%' || #{searchWord} || '%'))
+						</when>
+						<otherwise>
+							and r_no in (select r_no from roadmap where u_no in(select u_no from user_info where ${category} like '%' || #{searchWord} || '%'))
+						</otherwise>
+					</choose>								
+				</if>
+				<if test="s_no!=0">
+					and s_no=#{s_no}
+				</if>
+				<if test="cate_sub_no!=0">
+					and r_no in (select r_no from roadmap where cate_sub_no=#{cate_sub_no}) 					
+				</if>
+			</where>
+		
+	</select>
+		
+	<!-- 로드맵 상세 조회 -->
+	<select id="selectRoadmap" resultType="com.site.team1.vo.RoadmapDetailAdminVo">
+		
+		select rr.* from
+			(
+				select rownum rnum, bb.* from	
+					(
+					select r.*
+						,(select cate_sub_name from category_sub c where c.cate_sub_no = ( select cate_sub_no from roadmap m where m.r_no=r.r_no ) ) as cate_sub_name
+					    ,(select u_name from user_info u where u.u_no=t.u_no) as u_name
+					    ,(select s_name from subject s where s.s_no=r.s_no) as s_name
+					    ,(select count(*) from roadmap_detail rd, roadmap rm where rd.r_no=rm.r_no(+) and rd.r_no=r.r_no) as r_count  
+					from textbook t, roadmap_detail r
+					<where>
+						t.textbook_no=r.textbook_no
+						<if test="r_detail_startdate!=null">
+							and ( r_detail_startdate between  #{r_detail_startdate} and #{r_detail_enddate} or r_detail_enddate between #{r_detail_startdate} and #{r_detail_enddate})
+						</if>
+						<if test="!searchWord.equals('')">
+							<choose>
+								<when test="category.equals('all')">
+									and r_no in (select r_no from roadmap where u_no in(select u_no from user_info where u_id like '%' || #{searchWord} || '%' or u_name like '%' || #{searchWord} || '%'))
+								</when>
+								<otherwise>
+									and r_no in (select r_no from roadmap where u_no in(select u_no from user_info where ${category} like '%' || #{searchWord} || '%'))
+								</otherwise>
+							</choose>								
+						</if>
+						<if test="s_no!=0">
+							and s_no=#{s_no}
+						</if>
+						<if test="cate_sub_no!=0">
+							and r_no in (select r_no from roadmap where cate_sub_no=#{cate_sub_no}) 					
+						</if>
+					</where>
+					) bb
+                ) rr 
+            where ceil(rnum/#{limit})=#{page}
+            order by rnum			
+			
+	</select>
+	
+	<!-- 1번 챠트 정보 -->
+	<!-- 과목별 loadmap 현황 -->
+	<!-- 	select s.s_no,s.s_name,r.r_detail_grade,count(r.r_detail_grade)from subject s, roadmap_detail r
+	where s.s_no=r.s_no and r.s_no > 0
+	group by  s.s_no,s.s_name,r.r_detail_grade
+	order by s.s_no,s.s_name,r.r_detail_grade -->
+	<select id="selectChart1" resultType="com.site.team1.vo.RoadmapAdminChartVo1">
+		select  s.s_name || '-' || r.r_detail_grade as r_grade ,count(r.r_detail_grade) as r_grade_ct  from subject s, roadmap_detail r 
+		<where>
+			s.s_no=r.s_no and r.s_no > 0
+			<if test="r_detail_startdate!=null">
+				and ( r.r_detail_startdate between  #{r_detail_startdate} and #{r_detail_enddate} or r.r_detail_enddate between #{r_detail_startdate} and #{r_detail_enddate})
+			</if>
+			<if test="!searchWord.equals('')">
+				<choose>
+					<when test="category.equals('all')">
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where u_id like '%' || #{searchWord} || '%' or u_name like '%' || #{searchWord} || '%'))
+					</when>
+					<otherwise>
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where ${category} like '%' || #{searchWord} || '%'))
+					</otherwise>
+				</choose>								
+			</if>
+			<if test="s_no!=0">
+				and s.s_no=#{s_no}
+			</if>
+			<if test="cate_sub_no!=0">
+				and r.r_no in (select r_no from roadmap where cate_sub_no=#{cate_sub_no}) 					
+			</if>
+		</where>
+		group by  s.s_no,s.s_name,r.r_detail_grade
+		order by s.s_no,s.s_name,r.r_detail_grade
+	</select>
+	<!-- 학년별 선택교제  -->
+<!-- 	select * from
+	(select   g.gi_no, g.gi_nm,t.textbook_no,t.textbook_content from grade_info g, textbook t
+	where textbook_no in (select distinct textbook_no from roadmap_detail) and g.gi_no > 0 
+	) a ,
+	(select textbook_no,count(textbook_no) book_ct from roadmap_detail group by textbook_no) d
+	where a.textbook_no=d.textbook_no(+) 
+	order by a.gi_no -->
+	<select id="selectChart2" resultType="com.site.team1.vo.RoadmapAdminChartVo2">
+		select a.textbook_content,sum(d.book_ct) book_ct from
+		(select   g.gi_no, g.gi_nm,t.textbook_no,t.textbook_content from grade_info g, textbook t
+		where textbook_no in (select distinct textbook_no from roadmap_detail) and g.gi_no > 0 
+		) a ,
+		(select textbook_no,count(textbook_no) book_ct from roadmap_detail r  
+		<where>
+			<if test="r_detail_startdate!=null">
+				and ( r.r_detail_startdate between  #{r_detail_startdate} and #{r_detail_enddate} or r.r_detail_enddate between #{r_detail_startdate} and #{r_detail_enddate})
+			</if>
+			<if test="!searchWord.equals('')">
+				<choose>
+					<when test="category.equals('all')">
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where u_id like '%' || #{searchWord} || '%' or u_name like '%' || #{searchWord} || '%'))
+					</when>
+					<otherwise>
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where ${category} like '%' || #{searchWord} || '%'))
+					</otherwise>
+				</choose>								
+			</if>
+			<if test="s_no!=0">
+				and r.s_no=#{s_no}
+			</if>
+			<if test="cate_sub_no!=0">
+				and r.r_no in (select r_no from roadmap where cate_sub_no=#{cate_sub_no}) 					
+			</if>
+		</where>
+		group by textbook_no ) d
+		where a.textbook_no=d.textbook_no(+) 
+		group by a.textbook_content
+		order by a.textbook_content
+	</select>
+	
+	<select id="selectChart3" resultType="com.site.team1.vo.RoadmapDetailAdminVo">
+		select s.s_no,s.s_name,r.r_detail_grade,count(r.r_detail_grade) as r_grade_ct from subject s, roadmap_detail r 
+		<where>
+			s.s_no=r.s_no and r.s_no > 0
+			<if test="r_detail_startdate!=null">
+				and ( r.r_detail_startdate between  #{r_detail_startdate} and #{r_detail_enddate} or r.r_detail_enddate between #{r_detail_startdate} and #{r_detail_enddate})
+			</if>
+			<if test="!searchWord.equals('')">
+				<choose>
+					<when test="category.equals('all')">
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where u_id like '%' || #{searchWord} || '%' or u_name like '%' || #{searchWord} || '%'))
+					</when>
+					<otherwise>
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where ${category} like '%' || #{searchWord} || '%'))
+					</otherwise>
+				</choose>								
+			</if>
+			<if test="s_no!=0">
+				and s.s_no=#{s_no}
+			</if>
+			<if test="cate_sub_no!=0">
+				and r.r_no in (select r_no from roadmap where cate_sub_no=#{cate_sub_no}) 					
+			</if>
+		</where>
+		group by  s.s_no,s.s_name,r.r_detail_grade
+		order by s.s_no,s.s_name,r.r_detail_grade
+	</select>
+	
+	<select id="selectChart4" resultType="com.site.team1.vo.RoadmapDetailAdminVo">
+		select s.s_no,s.s_name,r.r_detail_grade,count(r.r_detail_grade) as r_grade_ct from subject s, roadmap_detail r 
+		<where>
+			s.s_no=r.s_no and r.s_no > 0
+			<if test="r_detail_startdate!=null">
+				and ( r.r_detail_startdate between  #{r_detail_startdate} and #{r_detail_enddate} or r.r_detail_enddate between #{r_detail_startdate} and #{r_detail_enddate})
+			</if>
+			<if test="!searchWord.equals('')">
+				<choose>
+					<when test="category.equals('all')">
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where u_id like '%' || #{searchWord} || '%' or u_name like '%' || #{searchWord} || '%'))
+					</when>
+					<otherwise>
+						and r.r_no in (select r_no from roadmap where u_no in(select u_no from user_info where ${category} like '%' || #{searchWord} || '%'))
+					</otherwise>
+				</choose>								
+			</if>
+			<if test="s_no!=0">
+				and s.s_no=#{s_no}
+			</if>
+			<if test="cate_sub_no!=0">
+				and r.r_no in (select r_no from roadmap where cate_sub_no=#{cate_sub_no}) 					
+			</if>
+		</where>
+		group by  s.s_no,s.s_name,r.r_detail_grade
+		order by s.s_no,s.s_name,r.r_detail_grade
+	</select>
+
+</mapper>

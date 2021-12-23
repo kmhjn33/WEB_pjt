@@ -1,0 +1,408 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.BoardMapper" >
+
+
+	<!-- ====================BoardListPost resultMap========================= -->
+   	<!-- <resultMap id="boardPost" type="com.site.team1.vo.BoardPostVo" autoMapping="true">
+		<result column="b_post_no" property="b_post_no" />
+		<result column="b_post_title" property="b_post_title" />
+		<result column="b_post_content" property="b_post_content" />
+		<result column="b_post_date" property="b_post_date" />
+		<result column="b_post_moddate" property="b_post_moddate" />
+		<result column="b_post_hit" property="b_post_hit" />
+		<result column="b_cate_no" property="b_cate_no" />
+		<result column="u_no" property="u_no" />
+	</resultMap>
+	
+	<resultMap id="userInfo" type="com.site.team1.vo.UserInfoVo" autoMapping="true">
+		<result column="u_no" property="u_no" />
+		<result column="u_detail_no" property="u_detail_no" />
+		<result column="u_name" property="u_name" />
+		<result column="u_id" property="u_id" />
+		<result column="u_pw" property="u_pw" />
+		<result column="u_tel" property="u_tel" />
+		<result column="u_email" property="u_email" />
+		<result column="u_nickname" property="u_nickName" />
+		<result column="u_profile" property="u_profile" />
+		<result column="u_signdate" property="u_signDate" />
+		<result column="u_finaldate" property="u_finalDate" />
+		<result column="u_moddate" property="u_modDate" />
+		<result column="u_intro" property="u_intro" />
+	</resultMap>
+	
+	<resultMap id="boardCate" type="com.site.team1.vo.BoardCateVo">
+		<result column="b_cate_no" property="b_cate_no" />
+		<result column="b_cate_name" property="b_cate_name" />
+		<result column="b_no" property="b_no" />
+	</resultMap>
+
+	<resultMap id="BoardListPost" type="com.site.team1.vo.BoardListPost">
+		<result column="b_like_count" property="b_like_count"/>
+		<result column="b_comm_count" property="b_comm_count"/>
+		<collection resultMap="boardCate" property="boardCateVo" />
+		<collection resultMap="boardPost" property="boardPostVo" />
+		<collection resultMap="userInfo" property="userInfoVo" />
+	</resultMap> -->
+	<!-- ===================//BoardListPost resultMap========================= -->
+
+	
+	<!-- ============================= 검색 조건 ================================ -->
+	<sql id="boardSearch">
+		<if test="searchCate != ''">
+			<choose>
+				<when test="searchCate.equals('title')">
+					and bp.b_post_title like '%'||#{searchWord}||'%'
+				</when>
+				<when test="searchCate.equals('content')">
+					and bp.b_post_content like '%'||#{searchWord}||'%'
+				</when>
+				<when test="searchCate.equals('writer')">
+					and ui.u_nickname like '%'||#{searchWord}||'%'
+				</when>
+			</choose>
+		</if>
+	</sql>
+	<!-- ============================ //검색 조건 =============================== -->
+	
+	<!-- ============================ 카테고리 분류 =============================== -->
+	<sql id="boardCategorizing">
+		<if test="b_cate_no != 0">
+			and bp.b_cate_no = ${ b_cate_no }
+		</if>
+	</sql>
+	<!-- =========================== //카테고리 분류 ============================== -->
+	
+	<!-- ============================= 정렬 조건 =============================== -->
+	<sql id="boardSort">
+		<choose>
+			<when test="sort.equals('date')">
+				order by bp.b_post_date desc
+			</when>
+			<when test="sort.equals('view')">
+				order by bp.b_post_hit desc, bp.b_post_date desc
+			</when>
+			<when test="sort.equals('like')">
+				order by count(distinct bl.b_like_no) desc, bp.b_post_date desc
+			</when>
+		</choose>
+	</sql>
+	<!-- ============================ //정렬 조건 =============================== -->
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 전체 게시글 가져오기 -->
+	<select id="selectBoardList" resultType="com.site.team1.vo.BoardListPost">
+	
+		select postList.* 
+		from (
+				select post.*, rownum as rnum 
+		        from (
+						select bp.b_post_no as b_post_no, 
+							   bp.b_post_title as b_post_title, 
+							   bp.b_post_date as b_post_date, 
+							   bp.b_post_hit as b_post_hit, 
+				       		   bcate.b_cate_name as b_cate_name, 
+				       		   count(distinct bl.b_like_no) as b_like_count,
+				               count(distinct (case when bcomm.b_comm_expose='Y' then 1 end)) as b_comm_count,
+				       		   ui.u_nickname as u_nickname
+
+						from   board_post bp, board_cate bcate, board_like bl, user_info ui, board_comment bcomm
+
+						where  bp.b_cate_no = bcate.b_cate_no and 
+						       bp.b_post_no = bl.b_post_no(+) and
+				               bp.b_post_no = bcomm.b_post_no(+) and
+						       bp.u_no = ui.u_no and
+				      		   bp.b_cate_no in (select b_cate_no from board_cate where b_no = ${b_no}) and
+				      		   bp.b_post_expose = 'Y'
+				      		   <!-- 검색 적용 -->
+				               <include refid="boardSearch" />
+ 				               <!-- 카테고리 분류 적용 -->
+				               <include refid="boardCategorizing" />
+
+						group by bp.b_post_no, bp.b_post_title, bp.b_post_date, bp.b_post_hit, ui.u_nickname, bcate.b_cate_name 
+
+ 						<!-- 정렬 적용 -->
+						<include refid="boardSort" />
+						
+					) post
+				) postList
+		<![CDATA[
+		where postList.rnum >= ${boardPage.startRow} and postList.rnum <= ${boardPage.endRow}
+		]]>
+		
+	</select>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 게시글 갯수 가져오기 -->
+	<select id="selectBoardListCount" resultType="int">
+			select count(*) 
+       		from   board_post bp, user_info ui
+       		where  bp.u_no = ui.u_no and
+              	   bp.b_cate_no in (select b_cate_no from board_cate where b_no = ${b_no}) and
+              	   bp.b_post_expose = 'Y'
+		              <!-- 검색 적용 -->
+				   <include refid="boardSearch" />
+				   <!-- 카테고리 분류 적용 -->
+				   <include refid="boardCategorizing" />
+	</select>
+	
+<!-- *********************************************************************************** -->	
+	
+	<!-- 현재 게시판의 카테고리 리스트 가져오기 -->
+	<select id="selectBoardCateList" resultType="com.site.team1.vo.BoardCateVo">
+		select * from board_cate where b_no = ${b_no}
+	</select>
+	
+<!-- *********************************************************************************** -->
+
+	<!-- 작성한 게시물 저장 -->
+	<insert id="insertBoardWrite">
+		<selectKey keyProperty="b_post_no" resultType="int" order="BEFORE">
+			select board_post_seq.nextval as b_post_no from dual
+		</selectKey>
+		insert into board_post 
+		values (${b_post_no}, 
+				#{b_post_title}, 
+				#{b_post_content}, 
+				sysdate, 
+				sysdate, 
+				0, 
+				${b_cate_no}, 
+				${u_no},
+				'Y'
+			   )
+	</insert>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 선택한 글 가져오기 -->
+	<select id="selectBoardPostThis" resultType="com.site.team1.vo.BoardListPost">
+	
+		select bp.b_post_no as b_post_no,
+		       bp.b_post_title as b_post_title, 
+		       bp.b_post_date as b_post_date, 
+		       bp.b_post_hit as b_post_hit,
+		       bp.b_post_content as b_post_content, 
+		       bp.b_post_expose as b_post_expose,
+		       bcate.b_cate_name as b_cate_name,
+		       count(distinct bl.b_like_no) as b_like_count,
+		       count(distinct (case when bcomm.b_comm_expose='Y' then 1 end)) as b_comm_count,
+		       ui.u_nickname as u_nickname,
+		       ui.u_no as u_no ,
+		       ui.u_id as u_id 
+		from   board_post bp, board_cate bcate, board_like bl, board_comment bcomm, user_info ui 
+		where  bp.b_cate_no = bcate.b_cate_no and
+		       bp.b_post_no = bl.b_post_no(+) and
+		       bp.b_post_no = bcomm.b_post_no(+) and
+		       bp.u_no = ui.u_no and
+		       bp.b_post_no = ${b_post_no}
+		group by bp.b_post_no, bp.b_post_title, bp.b_post_date, bp.b_post_hit, bp.b_post_content, 
+				 bcate.b_cate_name, ui.u_nickname, ui.u_no, ui.u_id, bp.b_post_expose
+		
+	</select>
+	
+<!-- *********************************************************************************** -->
+
+	<!-- 이전글 가져옴 -->
+ 	<select id="selectBoardPostPrev" resultType="com.site.team1.vo.BoardListPost">
+ 	
+		select bp.b_post_no, bp.b_post_title, count(distinct bcomm.b_comm_no) as b_comm_count
+		from   board_post bp, board_comment bcomm 
+	    where bp.b_post_no = bcomm.b_post_no(+) and
+           	  bp.b_post_no = (
+								select prev 
+                   				from (
+	                            		select b_post_no ,
+	                                   		   lag(b_post_no) over (order by b_post_date desc) as prev 
+                           				from board_post
+                           				where b_cate_no in (select b_cate_no from board_cate where b_no = ${boardMaker.b_no}) and
+                           					  b_post_expose = 'Y'
+                       				 )
+                   				where b_post_no = ${boardPostVo.b_post_no}
+                   			)
+		group by bp.b_post_no, bp.b_post_title
+                    		
+	</select>
+
+<!-- *********************************************************************************** -->
+
+	<!-- 다음글 가져옴 -->
+ 	<select id="selectBoardPostNext" resultType="com.site.team1.vo.BoardListPost">
+ 	
+		select bp.b_post_no, bp.b_post_title, count(distinct bcomm.b_comm_no) as b_comm_count
+		from   board_post bp, board_comment bcomm 
+	    where bp.b_post_no = bcomm.b_post_no(+) and
+           	  bp.b_post_no = (
+								select next 
+                   				from (
+	                            		select b_post_no ,
+	                                   		   lead(b_post_no) over (order by b_post_date desc) as next 
+                           				from board_post
+                           				where b_cate_no in (select b_cate_no from board_cate where b_no = ${boardMaker.b_no}) and
+                           				b_post_expose = 'Y'
+                       				 )
+                   				where b_post_no = ${boardPostVo.b_post_no}
+                   			)
+		group by bp.b_post_no, bp.b_post_title
+                    		
+	</select>
+	
+<!-- *********************************************************************************** -->
+
+	<!-- 댓글 가져옴 -->
+ 	<select id="selectBoardComment" resultType="com.site.team1.vo.BoardViewComment" >
+		
+		select bcomm.*,
+       		   ui.u_id,
+       		   ui.u_no,
+       		   ui.u_nickname,
+       		   count(distinct bcomml.b_comm_like_no) as b_comm_like_count,
+       		   ui_re.u_nickname as b_comm_reply_nickname
+		from   board_comment bcomm, board_comment_like bcomml, user_info ui, board_comment bcomm_re, user_info ui_re
+		where  bcomm.b_comm_no = bcomml.b_comm_no(+) and
+      		   bcomm.u_no = ui.u_no and
+      		   bcomm.b_comm_group = bcomm_re.b_comm_no(+) and
+     	 	   bcomm_re.u_no = ui_re.u_no and
+    		   bcomm.b_post_no = ${b_post_no} and
+    		   bcomm.b_comm_expose = 'Y'
+    		   
+		group by bcomm.b_comm_no, bcomm.b_comm_content, bcomm.b_comm_group, bcomm.b_comm_reply, 
+				 bcomm.b_comm_date, bcomm.b_comm_moddate, bcomm.b_post_no, bcomm.u_no, bcomm.b_comm_expose,
+         		 ui.u_id, ui.u_nickname, ui_re.u_nickname, ui.u_no
+         		 
+		order by bcomm.b_comm_group asc, bcomm.b_comm_date asc
+		
+	</select>
+	
+<!-- *********************************************************************************** -->
+
+	<!-- 인기글 가져옴 -->
+<!-- 	<select id="selectBoardPostPop" resultType="com.site.team1.vo.BoardListPost" >
+	</select> -->
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 글 수정 -->
+	<update id="updateBoardModify">
+		update board_post 
+		set b_post_title = #{ b_post_title },
+		    b_post_content = #{ b_post_content },
+		    b_post_moddate = sysdate,
+		    b_cate_no = ${ b_cate_no }
+		where b_post_no = ${ b_post_no }
+	</update>
+
+<!-- *********************************************************************************** -->
+	
+	<!-- 글 삭제 -->
+	<update id="updateBoardDel">
+		update board_post set b_post_expose = 'N' where b_post_no=${b_post_no}
+	</update>
+
+<!-- *********************************************************************************** -->
+
+	<!-- 글 신고 -->
+	<insert id="insertBoardReport">
+		insert into board_report
+		values (
+		        board_report_seq.nextval,
+		        #{u_no},
+		        sysdate,
+		        #{b_report_content},
+		        ${b_post_no}
+		        )
+	</insert>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 댓글 저장 -->
+	<insert id="insertCommentWrite">
+		insert into board_comment 
+		values (
+		        board_comment_seq.nextval,
+		        #{b_comm_content},
+		        <if test="b_comm_group == 0">
+		        board_comment_seq.currval,
+		        </if>
+		        <if test="b_comm_group != 0">
+		        #{b_comm_group},
+		        </if>
+		        #{b_comm_reply},
+		        sysdate,
+		        sysdate,
+		        ${b_post_no},
+		        ${u_no},
+		        'Y'
+		        )
+	</insert>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 댓글 수정 -->
+	<update id="updateCommentModify">
+		update board_comment
+		set b_comm_content = #{b_comm_content},
+		    b_comm_moddate = sysdate
+		where b_comm_no = ${b_comm_no}
+	</update>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 댓글 삭제 -->
+	<update id="updateCommentDel">
+		update board_comment
+		set b_comm_expose = 'N'
+		where b_comm_no = ${b_comm_no}
+	</update>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id="updateBoardViewCount">
+		update board_post
+		set b_post_hit = b_post_hit+1
+		where b_post_no = ${b_post_no}
+	</update>
+	
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 댓글 추천 -->
+	<insert id="insertCommentLike">
+		merge into board_comment_like
+		using dual
+		on (b_comm_no = ${b_comm_no} and u_no = ${u_no})
+		when not matched then
+	    insert 
+	    values (board_comment_like_seq.nextval,
+	            ${b_comm_no},
+	            sysdate,
+	            ${u_no})
+	</insert>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 게시글 추천 -->
+	<insert id="insertPostLike">
+		merge into board_like
+		using dual
+		on (b_post_no = ${b_post_no} and u_no = ${u_no})
+		when not matched then
+	    insert 
+	    values (board_like_seq.nextval,
+	    		sysdate,
+	            ${u_no},
+	            ${b_post_no})
+	    when matched then
+        update set b_like_date = sysdate
+        delete where u_no = ${u_no}
+	</insert>
+	
+<!-- *********************************************************************************** -->	
+
+
+</mapper>

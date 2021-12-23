@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.RoadmapDetailMapper">
+
+	<!-- 로드맵 제목 변경 -->
+	<update id="updateTitle">
+		update roadmap set r_name=#{r_name} where r_no=#{r_no}
+	</update>
+	
+	<!-- 수정된 로드맵 리스트 -->
+	<select id="modiRoadmapList" resultType="com.site.team1.vo.RoadmapVo">
+		select * from roadmap where r_no=${r_no}
+	</select>
+
+	<!-- 사이드바 로드맵 리스트 -->
+	<select id="roadmapList" resultType="com.site.team1.vo.RoadmapVo">
+		select * from roadmap where u_no=#{u_no} and cate_sub_no not in('2', '4', '6', '22') and r_expose not in('N') order by r_no desc
+	</select>
+		
+	<!-- 세부 로드맵 리스트 -->
+	<select id="selectRoadmapDetail" resultType="com.site.team1.vo.RoadmapDetailVo">
+		select d.r_detail_no, d.r_detail_title, d.r_detail_date, d.r_detail_content, d.r_detail_priority, d.r_detail_startdate, d.r_detail_enddate, d.r_detail_state, d.r_detail_grade, d.s_no, s.s_name, t.textbook_no, t.textbook_content
+		from roadmap_detail d, subject s, textbook t
+		where (d.s_no(+)=s.s_no and d.textbook_no=t.textbook_no(+)) and d.r_no=#{r_no}
+		order by r_detail_no desc
+	</select>
+	
+	<!-- 수정 모달 리스트 -->
+	<select id="inModi" resultType="com.site.team1.vo.RoadmapDetailVo">
+		select d.r_detail_no, d.r_detail_title, d.r_detail_date, d.r_detail_content, d.r_detail_priority, d.r_detail_startdate, d.r_detail_enddate, d.r_detail_state, d.r_detail_grade, d.s_no, s.s_name, t.textbook_no, t.textbook_content
+		from roadmap_detail d, subject s, textbook t
+		where (d.s_no(+)=s.s_no and d.textbook_no=t.textbook_no(+)) and r_detail_no=#{r_detail_no}
+	</select>
+	
+	<!-- 교재 저장 -->
+	<insert id="insertSubject">
+		insert into textbook values (textbook_seq.nextval, #{textbook_content}, #{u_no})
+	</insert>
+	
+	<!-- 교재 리스트 -->
+	<select id="selectTextbook" resultType="com.site.team1.vo.TextbookVo">
+		select * from textbook where u_no=#{u_no} and textbook_no not in('0') order by textbook_no desc
+	</select>
+	
+	<!-- 과목 리스트 -->
+	<select id="selectSubject" resultType="com.site.team1.vo.SubjectVo">
+		select * from subject order by s_no asc
+	</select>
+
+	<!-- 세부 로드맵 저장 -->
+	<insert id="insertDetailRoadmap">
+		insert into roadmap_detail values (roadmap_detail_seq.nextval, #{r_detail_title}, sysdate, #{r_detail_content}, #{r_detail_priority}, #{r_detail_startdate}, #{r_detail_enddate}, 
+		#{r_no}, #{s_no}, #{r_detail_state}, #{r_detail_grade}, #{textbook_no})
+	</insert>
+		
+	<!-- 세부 로드맵 수정 -->	<!-- , r_detail_date=#{r_detail_date}, -->
+	<update id="detailModi">
+		update roadmap_detail set r_detail_title=#{r_detail_title}, r_detail_content=#{r_detail_content}, r_detail_priority=#{r_detail_priority},
+		r_detail_startdate=#{r_detail_startdate}, r_detail_enddate=#{r_detail_enddate}, s_no=#{s_no}, r_detail_state=#{r_detail_state}, r_detail_grade=#{r_detail_grade}, textbook_no=#{textbook_no}
+		where r_detail_no=#{r_detail_no}
+	</update>	
+		
+	<!-- 세부 로드맵 삭제 -->
+	<delete id="detailroadmapDelete">
+		delete from roadmap_detail where r_detail_no=#{r_detail_no}
+	</delete>
+	
+	<!-- 시작전 카운트 -->
+	<select id="startCount" resultType="int">
+		select count(*) from roadmap_detail where r_no=#{r_no} and r_detail_state='시작 전'
+	</select>
+	
+	<!-- 진행중 카운트 -->
+	<select id="ingCount" resultType="int">
+		select count(*) from roadmap_detail where r_no=#{r_no} and r_detail_state='진행 중'
+	</select>
+	
+	<!-- 완료 카운트 -->
+	<select id="endCount" resultType="int">
+		select count(*) from roadmap_detail where r_no=#{r_no} and r_detail_state='완료'
+	</select>
+	
+	<!-- noneCount 카운트 -->
+	<select id="noneCount" resultType="int">
+		select count(*) from roadmap_detail where r_no=#{r_no} and r_detail_state='상태 없음'
+	</select>
+	
+	<!-- 로드맵 삭제 -->
+	<update id="roadmapDel">
+		update roadmap set r_expose='N' where r_no=#{r_no}
+	</update>
+	
+	<!-- 삭제시 이전 로드맵 가져오기 -->
+	<select id="preRoadmapList" resultType="com.site.team1.vo.RoadmapVo">
+		select * from (select rownum as rnum, r.* from (select * from roadmap where cate_sub_no not in('2', '4', '6', '22') and r_expose not in('N') and u_no=#{u_no} order by r_no desc) r)
+		where rnum=(select rnum from (select rownum as rnum, r.* from (select * from roadmap 
+		where cate_sub_no not in('2', '4', '6', '22') and r_expose not in('N') and u_no=#{u_no} order by r_no desc) r)
+		where r_no=#{r_no})+1
+	</select>
+	
+	<!-- 로드맵 세부 상태 변경 -->
+	<update id="updateRoadmapDetailState">
+		update roadmap_detail 
+		set	   r_detail_state = #{r_detail_state}
+		where  r_detail_no = ${r_detail_no}
+	</update>
+		
+</mapper>

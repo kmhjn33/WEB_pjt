@@ -1,0 +1,118 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.CrewAdminMapper">
+	
+	
+	<!-- 크루 메인 카테고리 정보 -->
+	<select id="selectCategoryMainMap" resultType="com.site.team1.vo.CategoryMainAdminVo">
+		select * from category_main
+	</select>
+	
+	<!-- 크루 서브 카테고리 정보  -->
+	<select id="selectCategorySubMap" resultType="com.site.team1.vo.CategorySubAdminVo">
+		select * from category_sub where ${cate_main_no}=#{cate_main_no}
+	</select>
+	
+	<!-- 크루 리스트 정보 -->
+	<select id="selectCrewListMap" resultType="com.site.team1.vo.CrewAdminVo">
+		<if test="searchWord.equals('')">
+            select rr.* from
+                (select rownum rnum, bb.* from
+                    ( select c.*,u.u_name,u.u_profile,s.cate_sub_name from crew c,user_info u,category_sub s 
+                    <where>
+                    	c.cate_sub_no=s.cate_sub_no and c.u_no=u.u_no
+	                    <if test="cate_main_no!=0">
+		                    <if test="cate_sub_no!=0">
+		                    	and b.b_cate_no=#{b_cate_no}
+		                    </if>
+					        <if test="cate_main_no!=0 || cate_sub_no==0">
+			               		and c.cate_sub_no in (select cate_sub_no from category_sub where cate_main_no=#{cate_main_no})
+			               	</if>		                    
+	                    </if>
+                    </where>
+                    order by c.c_sdate) bb
+                ) rr 
+            where ceil(rnum/#{limit})=#{page}
+            order by rr.rnum
+		</if>	
+		
+		<if test="!searchWord.equals('')">
+            select rr.* from
+                (select rownum rnum, bb.* from
+                    ( select c.*,u.u_name,u.u_profile,s.cate_sub_name from crew c,user_info u,category_sub s 
+                    <where>
+                    	c.cate_sub_no=s.cate_sub_no and c.u_no=u.u_no
+	                    <if test="cate_main_no!=0">
+		                    <if test="cate_sub_no!=0">
+		                    	and b.b_cate_no=#{b_cate_no}
+		                    </if>
+					        <if test="cate_main_no!=0 || cate_sub_no==0">
+			               		and c.cate_sub_no in (select cate_sub_no from category_sub where cate_main_no=#{cate_main_no})
+			               	</if>
+	                    </if>
+	                    <if test="category.equals('all')">
+	                    	and ( c_title like '%' || #{searchWord} || '%' or c_detail_content like '%' || #{searchWord} || '%' or c_addr1 like '%' || #{searchWord} || '%' )
+	                    </if>
+	                    <if test="!category.equals('all')">
+	                    	and ${category} like '%' || #{searchWord} || '%' 
+	                    </if>
+                    </where>
+                   order by c.c_sdate) bb
+                ) rr 
+            where ceil(rnum/#{limit})=#{page}
+            order by rnum
+		</if>
+		
+	</select>
+	
+	<!-- 크루 리스트 정보 카운트  -->
+	<select id="selectCrewCountMap" resultType="int">
+			<if test="searchWord.equals('')">
+            
+                
+                    select count(*) from crew c 
+                    <where>
+	                    <if test="cate_main_no!=0">
+		                    <if test="cate_sub_no!=0">
+		                    	and b.b_cate_no=#{b_cate_no}
+		                    </if>
+					        <if test="cate_main_no!=0 || cate_sub_no==0">
+			               		and c.cate_sub_no in (select cate_sub_no from category_sub where cate_main_no=#{cate_main_no})
+			               	</if>
+	                    </if>
+                    </where>
+                    
+		</if>	
+		
+		<if test="!searchWord.equals('')">
+            
+            
+                    select count(*) from crew c
+                    <where>
+                    	c.cate_sub_no=s.cate_sub_no and c.u_no=u.u_no
+	                    <if test="cate_main_no!=0">
+		                    <if test="cate_sub_no!=0">
+		                    	and b.b_cate_no=#{b_cate_no}
+		                    </if>
+					        <if test="cate_main_no!=0 || cate_sub_no==0">
+			               		and c.cate_sub_no in (select cate_sub_no from category_sub where cate_main_no=#{cate_main_no})
+			               	</if>
+			            </if>
+	                    
+	                    <if test="category.equals('all')">
+	                    	and ( c_title like '%' || #{searchWord} || '%' or c_detail_content like '%' || #{searchWord} || '%' or c_addr1 like '%' || #{searchWord} || '%' )
+	                    </if>
+	                    <if test="!category.equals('all')">
+	                    	and ${category} like '%' || #{searchWord} || '%' 
+	                    </if>
+                    </where>
+		</if>	
+	</select>
+	
+	<select id="selectCrewInfoMap" resultType="com.site.team1.vo.CrewAdminVo">
+		select * from crew where c_no=#{c_no}
+	</select>
+	
+</mapper>

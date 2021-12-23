@@ -1,0 +1,143 @@
+@font-face {
+	font-family: 'Pretendard-Regular';
+	src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+}
+*{font-family: 'Pretendard-Regular';}
+
+*{box-sizing: border-box;}
+
+body{
+	margin:0;
+	background-color: #ffffff;
+}
+
+
+
+a{color:inherit;text-decoration:none}
+h1{
+	text-align: center;
+	font-weight: bold;
+	color: #272343;
+	font-size: 30px;
+	padding-bottom: 30px;
+
+}
+
+.login-wrap{
+	width:100%;
+	margin:auto;
+	max-width:525px;
+	padding-top: 100px;
+	min-height:670px;
+	position:relative;
+	
+	
+	
+}
+.login-html{
+	width:100%;
+	height:100%;
+	position:absolute;
+	padding:100px 90px 100px 90px;
+	background:#fffffe;
+	height: 800px;
+	box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.16);
+	
+}
+
+.login-form{
+	min-height:345px;
+	position:relative;
+	perspective:1000px;
+	transform-style:preserve-3d;
+	
+}
+.login-form .group{
+	padding: 10px 0px;
+	
+	
+	
+}
+.login-form .group .label,
+.login-form .group .input,
+.login-form .group .button{
+	width:100%;
+	display:block;
+}
+
+p{
+	text-align: center;
+	color: 333;
+    font-size: small;
+}
+.group .label{
+	color: #2d334a;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+
+.login-form .group .label{
+	
+	font-size:12px;
+}
+.checkboxtype{
+	background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    line-height: 16px;
+    cursor: pointer;
+}
+.buttonEx{
+	padding-top: 5px;
+}
+.login-form .group .button{
+	background:#ffd803;
+	border: 1px solid #ffd803;
+	box-shadow: none;
+	color: #272343;
+	border-radius: 0.375em;
+	cursor: pointer;
+	padding: 0 2.25em;
+	height: 40px;
+	font-size: 1em;
+	
+}
+
+.middle ,.bottom{
+	text-align: center;
+	padding: 10px
+}
+.middle .session,
+.bottom .session{
+	color: #ffd803;
+}
+.middle span,
+.bottom span{
+	color: #2d334a;
+	font-size: 25px;
+}
+
+
+
+.footer {
+	padding-top: 50px;
+}
+
+
+.Btn{
+	padding-top: 200px;
+}
+.Btn2{
+	padding-top: 30px;
+	
+}
+.sign-up-htm .group p{
+	font-size: 20px;
+	color: #2d334a;
+	font-weight: normal;
+}
+.sign-up-htm .group .header p{
+	color: #2d334a;
+	font-weight: bold;
+}

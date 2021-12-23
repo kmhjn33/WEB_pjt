@@ -1,0 +1,55 @@
+
+/*---------------footer-----------------------------------------*/
+
+footer {
+    height:125px;
+    background-color: #2d334a;
+    margin-top: 70px;
+}
+
+.container{
+	padding: 15px;
+}
+
+
+
+
+
+
+.copyleft {
+	width: 49%;
+    float: left;
+    height: 150px;
+    
+    
+}
+.copyleft ul{
+	text-align: left;
+	font-size: large;
+	color: #fffffe;
+}
+
+.left-img{
+	float: left;
+	padding: 5px;
+}
+.left-content{
+	padding-left: 15px;
+	line-height: 30px;
+	
+}
+
+
+.copyright{
+	width: 49%;
+	float: right;
+    height: 150px;
+	
+}
+.copyright a{
+	padding: 15px;
+	font-size: large; 
+	color: #fffffe;
+	text-decoration:none
+	
+}

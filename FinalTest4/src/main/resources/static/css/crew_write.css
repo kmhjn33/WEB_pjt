@@ -1,0 +1,261 @@
+*{margin: 0; padding: 0; list-style: none;}
+* { word-break: keep-all; }
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+ }
+ *{font-family: 'Pretendard-Regular';}
+
+/* header--------------------------------------------------------------- */
+.top{width: 1200px; margin: 0 auto;
+    height: 80px;
+    border-bottom: 4px solid #272343;
+}
+.top .category{float: left;
+    line-height: 80px;
+    padding-left: 40px;
+    font-size: 20px;
+}
+.top .icon{float: right;}
+.icon ul{padding-right: 40px; display: inline;}
+.icon ul li{display: inline-block;}
+.icon ul li .icon1{ margin-right: 60px;}
+.icon ul li .icon1 .material-icons{
+    display: inline-block;
+    
+    padding: 20px;
+    color: #f56a6a;
+}
+.icon ul li .icon2 .material-icons{
+    display: inline-block;
+    padding: 20px;
+    color: #f56a6a;
+}
+/* icon2 hover */
+.icon2 {
+    position: relative;
+    display: inline-block;
+  }
+  
+.icon2 .tooltip {
+visibility: hidden;
+width: 120px;
+background-color: #eeecec;
+text-align: center;
+border-radius: 6px;
+padding: 5px 0;
+
+/* Position the icon2 */
+position: absolute;
+z-index: 1;
+top: 90%;
+left: 70%;
+margin-left: -60px;
+}
+.icon2 .tooltip li{
+margin: 15px;
+}
+
+.icon2 .tooltip a{
+    color: #f56a6a;
+    
+}
+
+.icon2:hover .tooltip {
+visibility: visible;
+}
+
+/* section---------------------------------------------------- */
+
+.wrap{
+    width: 1200px;
+    margin: 0 auto;
+
+    overflow: hidden;
+    
+}
+
+.wrap .t-left{
+    width: 700px;
+    float: left;
+    height: 50px;
+    margin-top:100px;
+}
+.wrap .t-left p {
+    padding-top: 25px;
+    padding-left: 30px;
+    font-size: 20px;
+    color: #2d334a;
+}
+.wrap .t-right{
+    width: 500px;
+    float: right;
+    padding-top: 30px;
+    color: #2d334a;
+    margin-top:100px;
+    /* height: 50px; */
+    /* margin: 40px 0; */
+}
+/* main1 ---------------------------------------------------- */
+.wrap .main1{
+    width: 800px;
+    float: left;
+
+    margin-left: 20px;
+}
+.wrap .main1 .chart{
+    width: 100%;
+    overflow: hidden;
+    border-top: 2px solid #272343;
+    color: #2d334a;
+}
+table, tr, th, td{
+    font-size: 18px;
+}
+input{
+    font-size: 15px;
+    color: #2d334a;
+    border: none;
+    border-bottom: 1px dotted #2d334a;
+    outline: none;
+}
+
+textarea{resize: vertical; margin-left: 20px;
+    margin: 10px 20px 0 10px;
+    border: 1px solid rgb(214, 214, 214);
+}
+
+table{
+    border-collapse: separate;
+    border-spacing: 20px 20px;
+    margin-bottom: 10px;;
+}
+
+
+/* main2 ---------------------------------------------------- */
+.wrap .main2{
+    width: 310px;
+    float: right;
+    margin-right: 20px;
+}
+
+.wrap .main2 .profile{
+    width: 310px;
+    height: 470px;
+    padding: 15px;
+    background-color: #272343;
+    border-radius: 3px;
+}
+
+.wrap .main2 .profile_img_wrap {
+	width: 280px;
+	height: 280px;
+	overflow: hidden;
+}
+
+.wrap .main2  .profile .profile_img_wrap img{
+     width: 100%;
+     height: 100%;
+}
+.wrap .main2 .profile .mod_profile_head{
+    font-size: 25px;
+    color: #fffffe;
+    padding-top: 20px;
+}
+.wrap .main2 .profile .mod_profile_cont{
+    font-size: 23px;
+    padding-left: 31px;
+    color: #fffffe;
+}
+.wrap .main2 input{
+    margin: 20px 0 5px 0;
+    width: 298px; height: 30px;
+    font-size: 17px;
+    border: 1px solid #e7e7e7;
+    outline: none;
+    padding: 5px;
+}
+.wrap .main2 .main2-btn{
+    width: 280px;
+}
+.wrap .main2 .main2-btn button{
+    display: inline-block;
+    font-size: 16px;
+    /* width: 250px;
+    height: 30px;
+    margin: 0 20px 10px 20px; */
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+
+}
+.wrap .main2 .main2-btn p{
+    font-size: 12px;
+    color: rgb(219, 97, 121);
+    margin-left: 20px;
+}
+
+
+
+/* ------------------------------ 추가 디자인 -------------------------- */
+
+.material-icons {
+    vertical-align: middle;
+}
+
+.mod_btn3 {
+    width: 310px;
+    height: 42px;
+    padding: 10px 5px 10px 5px;
+    background-color: #272343;
+    color: #fffffe;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.mod_btn2 {
+    width: 310px;
+    padding: 10px 0 10px 0;
+    margin-top: 20px;
+    color: #272343;
+    font-weight: bold;
+    background-color: #ffd803;
+    border-radius: 3px;
+}
+
+.mod_btn1 {
+    width: 310px;
+    padding: 10px 0 10px 0;
+    margin-top: 10px;
+    color: #272343;
+    font-weight: bold;
+    background-color: #bae8e8;
+    border-radius: 3px;
+}
+
+.info {
+    font-weight: bold;
+}
+
+select {
+    font-size: 18px;
+    color: #2d334a;
+    border: none;
+    border-bottom: 1px dotted #2d334a;
+    outline:none;
+}
+
+.mod_form_btn {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background-color: #272343;
+    color: #fffffe;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+

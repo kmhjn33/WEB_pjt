@@ -1,0 +1,248 @@
+*{margin: 0; padding: 0; list-style: none;}
+* { word-break: keep-all; }
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+ }
+ *{font-family: 'Pretendard-Regular';}
+
+/* ---------------------------------------------------------------header */
+.top{width: 1200px; margin: 0 auto;
+    height: 80px;
+    background-color: #fffffe;
+    border-bottom: 4px solid #272343;
+}
+.top .category{float: left;
+    line-height: 80px;
+    padding-left: 40px;
+    font-size: 20px;
+    color: #272343;
+}
+.top .icon{float: right;}
+.icon ul{padding-right: 40px; display: inline;}
+.icon ul li{display: inline-block;}
+.icon ul li .icon1{ margin-right: 60px;}
+.icon ul li .icon1 .material-icons{
+    display: inline-block;
+    color: #272343;
+    padding: 20px;
+    
+}
+.icon ul li .icon2 .material-icons{
+    display: inline-block;
+    padding: 20px;
+    color: #272343;
+}
+
+/*-------------------------------------------------------------- section middle */
+.wrap{width: 1200px; margin: 0 auto;}
+#indentindent {margin-top: 100px; display: inline-block;}
+.middle{
+    width: 1200px; margin: 0 auto; overflow: hidden;
+    background-color: #fffffe;
+    border-bottom: 4px solid #272343;
+    border-top: 4px solid #272343;
+    
+}
+.middle .left{
+    float: left;
+    margin: 80px 0 20px 80px;
+    width: 400px;
+    background-color: #fffffe;
+}
+.middle .left .topText{
+    font-size: 40px;
+    margin-bottom: 20px;
+    background-color: #fffffe;
+    color: #272343;
+}
+.middle .left .topText p{
+    letter-spacing: -1px;
+    font-weight: bold;
+}
+.middle .left .bottomText{
+    margin-bottom: 20px;
+    background-color: #fffffe;
+    color: #272343;
+}
+
+.middle .left .button ul li{display: inline;}
+.middle .left .button ul li a{
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: #ffd803;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: #272343;
+}
+/* 크루만들기 호버 */
+.middle .left .button ul li a:hover{
+    background-color: #272343;
+    color: white;
+}
+
+.middle .right{
+    float: right;
+    margin: 20px 80px 20px 0;
+    width: 600px; height: 400px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.middle .right img{
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: auto;
+}
+
+/* -----------------------------------------------------------section bottom */
+.bottom{
+    width: 1200px; margin: 0 auto;
+    padding: 50px 0;
+    background-color: #fffffe;
+    margin-bottom: 100px;
+}
+.bottom .major{
+    margin-bottom: 40px;
+    margin-left: 40px;
+}
+.bottom h2{
+    margin-left: 37px;
+    padding: 3px 10px;
+    display: inline-block;
+    border-radius: 3px;
+    color: #272343;
+    background-color: #e3f6f5;
+}
+.bottom .feature{overflow: hidden;}
+.bottom .feature .list{
+    width: 40%;
+    float: left;
+    border-radius: 5px;
+    border: 2px solid #272343;
+    background-color: #fffffe;
+    overflow: hidden;
+    margin: 0 0 20px 80px;
+    position: relative;
+}
+
+
+.bottom .feature .list .left{
+    float: left;
+    width: 150px; height: 200px;
+
+    position: relative;
+    overflow: hidden;
+}
+.bottom .feature .list .left img{
+    
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bottom .feature .list .right{
+    float: right;
+    width: 300px;
+    color: #272343;
+    margin: 30px 5px 0px 0px;
+}
+.bottom .feature .list .right .topText{
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+/* -----------가로 길이 넘어가면 ... 으로 나오게 하기 */
+.bottom .feature .list .right .topText p{
+width: 290px; /*px을 고정 값으로 설정*/
+white-space: nowrap;/* text의 길이가 길어지면 자동으로 줄이 바뀌는데 이를 한줄로 설정*/
+overflow: hidden;/* width가 고정되어있는 상태에서 text가 길어지면 해당 element를 넘어서는데 이를 표시하지 않는다.*/
+text-overflow: ellipsis;/* 넘어간 text대신 ...으로 text를 대체한다 */
+
+}
+
+.bottom .feature .list .right .when{
+    font-size: 15px;
+    margin-bottom: 5px;
+    color: #2d334a;
+}
+.bottom .feature .list .right .when span{
+    vertical-align: middle;
+}
+
+.bottom .feature .list .right .bottomText{
+    margin-bottom: 13px;
+    font-size: 20px;
+}
+/* -----------가로는 % 또는 설정 안했을 때 세로 길이만 ... 으로 나오게 하기 */
+.bottom .feature .list .right .bottomText p{
+    font-size: 16px;
+    
+    overflow: hidden;
+    text-overflow: ellipsis; /* width를 설정하지 않고 여기까진 위와 동일 */
+    height: 59px; /* 대신 height를 설정해준다. 텍스트 크기에 맞춰 height가 1줄인 경우*/
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 줄 개수를 설정한다. 만약 2줄이상이라면 height와 해당 값을 수정
+    출처: https://yeolco.tistory.com/151 [열코의 프로그래밍 일기] */
+    -webkit-box-orient: vertical;
+}
+
+.bottom .feature .list .right .button ul li{
+    display: inline;
+}
+.bottom .feature .list .right .button ul li a{
+    display: inline-block;
+    padding-right: 5px;
+    width: 110px;
+    font-size: 18px;
+    text-align: right;
+    color: #272343;
+    text-decoration-style: dotted;
+    position: absolute;
+    bottom: 20px;
+    left: 350px;
+}
+
+.bottom .feature .list .right .button ul li a.ho1:hover {
+    font-size: 150%;
+    font-weight: bold;
+    color: #ffd803;
+}
+
+/* icon2 hover */
+.icon2 {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .icon2 .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #eeecec;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the icon2 */
+    position: absolute;
+    z-index: 1;
+    top: 90%;
+    left: 70%;
+    margin-left: -60px;
+  }
+  .icon2 .tooltip li{
+    margin: 15px;
+  }
+
+  .icon2 .tooltip a{
+      color: #f56a6a;
+      
+  }
+  
+  .icon2:hover .tooltip {
+    visibility: visible;
+  }

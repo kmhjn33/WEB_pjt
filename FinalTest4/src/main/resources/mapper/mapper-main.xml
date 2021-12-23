@@ -1,0 +1,50 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.MainMapper" >
+
+
+<!-- *********************************************************************************** -->
+	
+	<!-- 최근 게시글 4개 가져오기 -->
+	<select id="selectBoardMain" resultType="com.site.team1.vo.BoardPostVo">
+	
+		select *
+		from (
+		        select rownum as rnum, post.*
+		        from (
+			            select p.*
+			            from board_post p, board_cate c, board b
+			            where p.b_cate_no = c.b_cate_no and
+			                  c.b_no = b.b_no and
+			                  b.b_no = ${b_no} and
+			                  p.b_post_expose = 'Y' 
+			            order by p.b_post_date desc
+			            )post
+		    )
+		where rnum between 1 and 4
+		
+	</select>
+	
+<!-- *********************************************************************************** -->
+	
+	<!-- 최근 생성 크루 가져오기 -->
+	<select id="selectCrewMain" resultType="com.site.team1.vo.CrewVo">
+	
+		select *
+		from (
+		        select rownum as rnum, crew.*
+		        from (
+		            select *
+		            from crew
+		            where c_expose = 'Y'
+		            order by c_no desc
+		            )crew
+		    )
+		where rnum between 1 and 8
+		
+	</select>
+	
+
+</mapper>

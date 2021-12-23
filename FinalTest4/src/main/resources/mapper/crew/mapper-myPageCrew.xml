@@ -1,0 +1,69 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.site.team1.mapper.MyCrewMapper">
+
+    <!-- 내 크루 전체 가져오기 -->
+	<select id="getMyCrew" resultType="com.site.team1.vo.CrewVo">
+		select * from crew where u_no=#{u_no} order by c_no desc
+	</select>
+	
+	<!-- 관심 크루 전체가져오기 (내가 만든 것 제외)-->
+	<select id="getCrewLike" resultType="com.site.team1.vo.CrewVo">
+		select c.* from crew c, crew_like l where c.c_no = l.c_no and l.u_no =#{u_no}
+		and not c.u_no=#{u_no}
+	</select>
+
+	<!-- 참여하고 싶어요 크루 전체 가져오기 (내가 만든 것 제외)-->
+	<select id="getCrewEntry" resultType="com.site.team1.vo.CrewVo">
+		select c.* from crew_entry e, (select * from crew where sysdate <![CDATA[<]]> c_sdate) c
+		where e.c_no = c.c_no and e.u_no = #{u_no} and not c.u_no=#{u_no}
+	</select>
+
+
+	<!-- 진행중 크루 전체 가져오기 (내가 만든 것 포함)-->
+	<select id="getIngList" resultType="com.site.team1.vo.CrewVo">
+		select c.* from
+		(select * from crew where c_sdate <![CDATA[<=]]> sysdate and sysdate <![CDATA[<=]]>c_edate) c, crew_entry e
+		where c.c_no = e.c_no and e.u_no =#{u_no} and c.u_no = #{u_no}
+	</select>
+
+	<!-- 완료된 크루 전체 가져오기 -->
+	<select id="getEndList" resultType="com.site.team1.vo.CrewVo">
+		select c.* from
+		(select * from crew where sysdate <![CDATA[>]]> c_edate) c, crew_entry e
+		where c.c_no = e.c_no and e.u_no =#{u_no} and c.u_no= #{u_no}
+	</select>
+
+	<!-- 임시저장 크루 전체 가져오기 -->
+	<select id="getNlist" resultType="com.site.team1.vo.CrewVo">
+		select * from crew where u_no = #{u_no} and c_expose = 'N'
+	</select>
+
+	<!-- 모집중 크루 전체 가져오기 -->
+	<select id="getRecruitList" resultType="com.site.team1.vo.CrewVo">
+		select * from crew where u_no = #{u_no} and sysdate <![CDATA[>=]]> c_apply_sdate and sysdate <![CDATA[<=]]> c_apply_edate
+	</select>
+
+	<!-- 시작 대기 크루 전체 가져오기 -->
+	<select id="getReadyList" resultType="com.site.team1.vo.CrewVo">
+		select * from crew where u_no = #{u_no} and sysdate <![CDATA[>]]> c_apply_edate and sysdate <![CDATA[<]]> c_sdate
+	</select>
+	
+	<!-- 해당 크루 삭제 -->
+	<delete id="crewDelete">
+		delete crew where c_no = #{c_no}
+	</delete>
+
+	<!-- 해당 크루 삭제 -->
+	<delete id="likeDelete">
+		delete crew_like where c_no = #{c_no}
+	</delete>
+
+	<!-- 해당 크루 삭제 -->
+	<delete id="entryDelete">
+		delete crew_entry where c_no = #{c_no}
+	</delete>
+	
+</mapper>

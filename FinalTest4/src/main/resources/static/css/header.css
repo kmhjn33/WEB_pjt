@@ -1,0 +1,262 @@
+*{margin: 0; padding: 0; list-style: none; box-sizing: border-box;}
+*{ word-break: keep-all; }
+
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+ }
+ *{font-family: 'Pretendard-Regular';}
+
+/* 헤더----------------------------------- */
+header{
+    width: 100%;
+    /* height: 2000px;
+    background-image: url(../images/2.jpg); */
+
+    position: absolute;
+    left: 0; top: 0;
+	z-index: 10;
+    
+}
+.total_header_wrap{
+    width: 100%;
+    background-color: #272343;
+    height: 70px;
+    position: fixed;
+    margin-top: -1px;
+}
+.total_header_nav{
+    width: 1200px; margin: 0 auto;
+}
+/* 왼쪽------------------------------ */
+.total_header_nav .total_header_left{
+    width: 600px;
+    /* float: left; */
+    height: 70px;
+    display: inline-block;
+    /* overflow: hidden; */
+}
+/* 왼쪽로고------------------------- */
+.total_header_nav .total_header_left .total_header_logo{
+    width: 130px;
+    height: 70px;
+    /* padding: 6px; */
+    float: left;
+}
+.total_header_nav > .total_header_left > .total_header_logo > a > img{
+    max-width: 100%;
+    height: auto
+}
+/* 왼쪽메뉴---------------------- */
+
+.total_header_cate{
+
+    float: left;
+    
+    width: 470px;
+    height: 70px;
+
+
+    line-height: 70px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.total_header_cate > .header_left_f_ul {
+    width: auto;
+    height: 70px;
+}
+
+.total_header_cate > .header_left_f_ul > .header_left_f_li{
+    float: left;
+    width: 125px;
+    position: relative;
+    
+}
+.total_header_cate > .header_left_f_ul > .header_left_f_li > a {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    color: #fffffe;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.total_header_cate > .header_left_f_ul > .header_left_f_li > .header_open_cate {
+    width: 100%;
+    display: none;
+    position: absolute;
+    top: 70px;
+    background-color: #272343;
+    z-index: 11;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.total_header_cate > .header_left_f_ul > .header_left_f_li > .header_open_cate > .header_left_ul_inner > .header_left_li_inner a{
+    color: #fffffe;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    
+}
+
+
+.total_header_cate > .header_left_f_ul > .header_left_f_li:hover > a{
+    color: #ffd803;
+    font-weight: bold;
+}
+
+.total_header_cate > .header_left_f_ul > .header_left_f_li:hover > .header_open_cate {
+    display: block;
+}
+
+.total_header_cate > .header_left_f_ul > .header_left_f_li > .header_open_cate > .header_left_ul_inner > .header_left_li_inner:hover {
+    background: #ffd803;
+    transition: ease 0.3s;
+}
+.total_header_cate > .header_left_f_ul > .header_left_f_li > .header_open_cate > .header_left_ul_inner > .header_left_li_inner:hover a{
+    color: #272343;
+    font-weight: bold;
+}
+
+/* 오른쪽--------------------------------- */
+
+.total_header_right{
+
+
+    float: right;
+    width: 450px;
+    height: 70px;
+    line-height: 70px;
+    margin: 0 auto;
+    text-align: center;
+
+    width: 600px;
+    /* float: left; */
+}
+.total_header_right > .total_header_user > .header_right_f_li{
+    float: right;
+    width: 90px;
+    height: 70px;
+    position: relative;
+    
+}
+
+.total_header_right > .total_header_user > .header_right_f_li > a{
+    color: #fffffe;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    vertical-align: middle;
+    /* font-weight: bold; */
+}
+/* account hover----------------- */
+.total_header_right > .total_header_user > .header_right_f_li > .header_open_user{
+    width: 90px;
+    display: none;
+    position: absolute;
+    background-color: #ffd803;
+    top: 70px;
+    z-index: 11;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+.total_header_right > .total_header_user > .header_right_f_li > .header_open_user > .header_right_ul_inner > .header_right_li_inner{
+    height: 40px;
+    line-height: 40px;
+}
+
+.total_header_right > .total_header_user > .header_right_f_li > .header_open_user > .header_right_ul_inner > .header_right_li_inner a{
+    color: #272343;
+    text-decoration: none;
+
+}
+
+.total_header_right > .total_header_user > .header_right_f_li > a > span{
+    display: inline-block;
+    height: 70px;
+    line-height: 70px;
+    vertical-align: middle;
+}
+
+.total_header_right > .total_header_user > .header_right_f_li:hover > a{
+    color: #ffd803;
+    font-weight: bold;
+}
+
+.total_header_right > .total_header_user > .header_right_f_li:hover > .header_open_user {
+    display:block;
+}
+
+.total_header_right > .total_header_user > .header_right_f_li > .header_open_user > .header_right_ul_inner > .header_right_li_inner:hover {
+    
+    background: #272343;
+    /* transition: ease 0.3s; */
+}
+.total_header_right > .total_header_user > .header_right_f_li > .header_open_user > .header_right_ul_inner > .header_right_li_inner:hover a{
+    color: #fffffe;
+    font-weight: bold;
+}
+
+
+
+
+
+
+.total_header_right > .total_header_user > .header_right_f_li > a:hover{
+    color: #ffd803;
+    /*
+    회원가입 또는 로그인 부분이라 명확한 포커스를 위해 a태그에 호버줌
+    카테고리는 자주 찾을 가능성이 있기에 li 에 호버를 줌
+    */
+}
+.total_header_right > .total_header_user > .header_right_f_li > a > #accountaccount{
+    display: inline-block;
+    width: 90px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 30px !important;
+    vertical-align: middle;
+}
+
+/* 검색박스------------------------------------ */
+
+
+/* .search_menumenu {
+    float: right;
+    line-height: 70px;
+  }
+  
+  .search_menumenu input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .search_menumenu button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 18px;
+    margin-right: 16px;
+    background: #ffd803;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .search_menumenu button:hover {
+    background: #ffd803;
+  } */
+
+
+
